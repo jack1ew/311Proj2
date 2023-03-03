@@ -1,0 +1,174 @@
+// Copyright 2023 Jackie Wang
+#ifndef PROJ2_INC_SERVER_H_
+#define PROJ2_INC_SERVER_H_
+#include <proj2/inc/unix_domain_socket.h>
+
+class DomainSocketServer : public UnixDomainSocket {
+ public:
+  using ::UnixDomainSocket::UnixDomainSocket;
+
+  std::string stringConverter(char *ch);
+  std::vector<std::string> stringParser(std::string str);
+  std::vector<std::vector<std::string>> fileParser(std::string path);
+  std::string searcher(std::vector<std::string> str, 
+                       std::vector<std::vector<std::string>> fi);
+  bool charFinder(std::string str);
+  void seeking(std::string str);
+  bool checker(std::string key, std::vector<std::string> str);
+  char[] bufferWriter(int start, int end, std::string str);
+  void RunServer() const {
+    const char kEoT = static_const<char>(3);
+    int sock_fd;  // unnamed socket file descriptor
+    int client_req_sock_fd;  // client connect request socket file descriptor
+
+    // (1) create a socket
+    //       AF_UNIX -> file system pathnames
+    //       SOCK_STREAM -> sequenced bytestream
+    //       0 -> default protocol (let OS decide correct protocol)
+    sock_fd = socket(AF_UNIX, SOCK_STREAM, 0);
+    if ( sock_fd < 0 ) {
+      std::cerr << strerror(errno) << std::endl;
+      exit(-1);
+    }
+
+    // (2) bind socket to address for the server
+    unlink(socket_path_.c_str());  // sys call to delete file if it already
+                                   //   exists (using Unix system calls for
+                                   //   sockets, no reason to be non-Unix
+                                   //   portable now).  :-/
+    int success = bind(sock_fd,
+                       // sockaddr_un is a Unix sockaddr and so may be cast "up"
+                       //   to that pointer type (think of it as C polymorphism)
+                       reinterpret_cast<const sockaddr*>(&sock_addr_),
+                       // size needs be known due to underlying data layout,
+                       //   i.e., there may be a size difference between parent
+                       //   and child
+                       sizeof(sock_addr_));
+
+    // log errors
+    if (success < 0) {
+      std::cerr << strerror(errno) << std::endl;
+      exit(-1);
+    }
+
+    // (3) Listen for connections from clients
+    size_t n = get_nprocs_conf();
+    size_t kMax_client_conns = n - 1;
+    success = listen(sock_fd, kMax_client_conns);
+    if (success < 0) {
+      std::cerr << strerror(errno) << std::endl;
+      exit(-1);
+    }
+    std::clog << "SERVER STARTED" << "\nMax CLIENTS = " << kMax_client_conns << std::endl;
+    const size_t kRead_buffer_size = 32;  // read 4 byte increaments
+    char read_buffer[kRead_buffer_size];
+    const ssize_t kWrite_buffer_size = 64;
+    char write_buffer[kWrite_buffer_size];
+    int bytes_read = 0;
+    int bytes_wrote = 0;
+    std::string search_string = "";
+    std::string file_name = "";
+    std::vector<std::string> search_s;
+    std::string fileOutput;
+    while (true) {
+      // (4) Accept connection from a client
+      client_req_sock_fd = accept(sock_fd, nullptr, nullptr);
+      if (client_req_sock_fd  < 0) {
+        std::cerr << strerror(errno) << std::endl;
+        continue;
+      }
+
+      std::clog << "CLIENT CONNECTED" << std::endl;
+      
+      // (5) Receive data from client(s)
+      bytes_read = read(client_req_sock_fd, read_buffer, kRead_buffer_size);
+      const char kKill_msg[] = "quit";  // TODO(lewisjs): trim whitespace
+                                        //   from read_buffer for comparison
+      int t = 0;
+      while (bytes_read > 0) {
+        if (strcmp(read_buffer, kKill_msg) == 0) {
+          std::clog << "Server shutting down..." << std::endl;
+          bytes_read = 0;  // message handled, disconnect client
+          exit(0);
+        }
+
+        // Combines the bytes read into a string and stops 
+        search_string += searchConverter(bytes_read);
+        if (charFinder(search_string)){
+          search_string.erase(remove(search_string.begin(), search_string.end(), kEoT), search_string.end());
+          break;
+        }
+        bytes_read = read(client_req_sock_fd, read_buffer, kRead_buffer_size);
+      }
+      if (bytes_read == 0) {
+        std::cout << "Client disconnected" << std::endl;
+        
+        close(client_req_sock_fd);
+      } else if (bytes_read < 0) {
+        std::cerr << strerror(errno) << std::endl;
+        exit(-1);
+      }
+
+      search_s = stringParser(search_string);
+      std::clog << "PATH: " << search_s[0] << std::endl;
+      std::clog << "OPERATION: " << search_s[1] << std::endl;
+      std::clog << "SEEKING: ";
+      for (int i = 2; i < search_s.size(); i++) {
+        std::clog << search_s[i];
+        if (i != search_s.size()-1) {
+          std::clog << ", ";
+        } else {
+          std::clog << std::endl;
+        }
+      }
+      
+      // Reults of the search
+      fileOutput = searcher(search_s, fileParser(search_s(0))); 
+      int outSize = fileOuput.size();
+      int ep = kWrite_buffer_size;
+      int sp = 0;
+      if (ep < outSize) {
+        write_buffer = bufferWriter(sp, ep, fileOutput);
+        ep += kWrite_buffer_size;
+        sp += kWrite_buffer_size;
+        t = write(sock_fd, write_buffer, kWrite_buffer_size);
+        bytes_wrote += t;
+      } else {
+        write_buffer = bufferWriter(sp, outSize, fileOutput);
+        sp += outSize - sp;
+        t = write(sock_fd, write_buffer, kWrite_buffer_size);
+        bytes_wrote += t;
+      }
+      while(t > 0) {
+        if (bytes_wrote == 0) {
+          std::clog << "Nothing Wrote" << std::endl;
+          exit(-2);
+        }
+        if (bytes_wrote < 0) {
+          std::cerr << strerror(errno) << std::endl;
+          exit(-1);
+        }
+        
+        if (ep < outSize) {
+          write_buffer += bufferWriter(sp, ep, fileOutput);
+          ep += kWrite_buffer_size;
+          sp += kWrite_buffer_size;
+          t = write(sock_fd, write_buffer, kWrite_buffer_size);
+          bytes_wrote += t;
+        } else {
+          write_buffer += bufferWriter(sp, outSize, fileOutput);
+          sp += outSize - sp;
+          t = write(sock_fd, write_buffer, kWrite_buffer_size);
+          bytes_wrote += t;
+        }
+      }
+      std::clog << "BYTES SENT: " << bytes_wrote << "\n";
+      if (fileOutput[0][0] == "INVALID FILE\n")
+        close(client_req_sock_fd);
+      
+    }
+  }
+};
+
+#endif  // PROJ2_INC_SERVER_H_
+
