@@ -33,7 +33,7 @@ std::vector<std::string> DomainSocketServer::stringParser(std::string str) {
   std::vector <std::string> tokens;
      
   // stringstream class check1
-  stringstream check1(str);
+  std::stringstream check1(str);
 
   std::string intermediate;
    
