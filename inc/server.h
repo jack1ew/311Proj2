@@ -6,7 +6,7 @@
 class DomainSocketServer : public UnixDomainSocket {
  public:
   using ::UnixDomainSocket::UnixDomainSocket;
-  const char kEoT = static_const<char>(3);
+  const char kEoT = static_cast<char>(3);
   const char kUS = static_cast<char>(31);
 
   std::string stringConverter(char *ch);
@@ -94,7 +94,7 @@ class DomainSocketServer : public UnixDomainSocket {
         }
 
         // Combines the bytes read into a string and stops 
-        search_string += stringConverter(bytes_read);
+        search_string += stringConverter(read_buffer);
         if (charFinder(search_string)){
           search_string.erase(remove(search_string.begin(), search_string.end(), kEoT), search_string.end());
           break;
@@ -128,15 +128,14 @@ class DomainSocketServer : public UnixDomainSocket {
       int outSize = fileOutput.size();
       int ep = kWrite_buffer_size;
       int sp = 0;
-      char ch[kWrite_buffer_size];
       if (ep < outSize) {
-        write_buffer = bufferWriter(sp, ep, fileOutput, ch);
+        bufferWriter(sp, ep, fileOutput, write_buffer);
         ep += kWrite_buffer_size;
         sp += kWrite_buffer_size;
         t = write(sock_fd, write_buffer, kWrite_buffer_size);
         bytes_wrote += t;
       } else {
-        write_buffer = bufferWriter(sp, outSize, fileOutput, ch);
+        bufferWriter(sp, outSize, fileOutput, write_buffer);
         sp += outSize - sp;
         t = write(sock_fd, write_buffer, kWrite_buffer_size);
         bytes_wrote += t;
@@ -152,13 +151,13 @@ class DomainSocketServer : public UnixDomainSocket {
         }
         
         if (ep < outSize) {
-          write_buffer += bufferWriter(sp, ep, fileOutput, ch);
+          bufferWriter(sp, ep, fileOutput, write_buffer);
           ep += kWrite_buffer_size;
           sp += kWrite_buffer_size;
           t = write(sock_fd, write_buffer, kWrite_buffer_size);
           bytes_wrote += t;
         } else {
-          write_buffer += bufferWriter(sp, outSize, fileOutput, ch);
+          bufferWriter(sp, outSize, fileOutput, write_buffer);
           sp += outSize - sp;
           t = write(sock_fd, write_buffer, kWrite_buffer_size);
           bytes_wrote += t;
