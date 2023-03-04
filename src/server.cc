@@ -28,7 +28,7 @@ std::vector<std::vector<std::string>> DomainSocketServer::fileParser(std::string
   }
 }
 
-std::vector<std::string> DomainSocketServer::stringParser(std::string str) {
+const std::vector<std::string> DomainSocketServer::stringParser(std::string str) {
   // Vector of string to save tokens
   std::vector <std::string> tokens;
      
@@ -53,7 +53,7 @@ bool DomainSocketServer::charFinder(std::string str) {
   return false;
 }
 
-std::string DomainSocketServer::stringConverter(char *ch) {
+const std::string DomainSocketServer::stringConverter(char *ch) {
   std::string str = ch;
   
   return str;
