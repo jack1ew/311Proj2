@@ -9,7 +9,7 @@ class DomainSocketServer : public UnixDomainSocket {
   const char kEoT = static_cast<char>(3);
   const char kUS = static_cast<char>(31);
 
-  std::string stringConverter(char *ch) const;`
+  std::string stringConverter(char *ch) const;
   std::vector<std::string> stringParser(std::string str) const;
   std::vector<std::vector<std::string>> fileParser(std::string path) const;
   std::string searcher(std::vector<std::string> str, 
