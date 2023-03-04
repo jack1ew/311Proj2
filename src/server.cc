@@ -6,7 +6,7 @@ std::vector<std::vector<std::string>> DomainSocketServer::fileParser(std::string
 	std::vector<std::string> row;
 	std::string line, word;
  
-	std::fstream file (path, ios::in);
+	std::fstream file (path, std::ios::in);
 	if(file.is_open())
 	{
 		while(getline(file, line))
