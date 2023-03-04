@@ -9,16 +9,16 @@ class DomainSocketServer : public UnixDomainSocket {
   const char kEoT = static_cast<char>(3);
   const char kUS = static_cast<char>(31);
 
-  std::string stringConverter(char *ch);
-  std::vector<std::string> stringParser(std::string str);
-  std::vector<std::vector<std::string>> fileParser(std::string path);
+  std::string stringConverter(char *ch) const;`
+  std::vector<std::string> stringParser(std::string str) const;
+  std::vector<std::vector<std::string>> fileParser(std::string path) const;
   std::string searcher(std::vector<std::string> str, 
-                       std::vector<std::vector<std::string>> fi);
-  bool charFinder(std::string str);
-  void seeking(std::string str);
-  bool checker(std::string key, std::vector<std::string> str);
-  void bufferWriter(int start, int end, std::string str, char ch[]);
-  void RunServer() {
+                       std::vector<std::vector<std::string>> fi) const;
+  bool charFinder(std::string str) const;
+  void seeking(std::string str) const;
+  bool checker(std::string key, std::vector<std::string> str) const;
+  void bufferWriter(int start, int end, std::string str, char ch[]) const;
+  void RunServer() const {
     int sock_fd;  // unnamed socket file descriptor
     int client_req_sock_fd;  // client connect request socket file descriptor
 

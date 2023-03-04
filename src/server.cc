@@ -1,6 +1,6 @@
 // Copyright 2023 Jackie Wang
 #include <proj2/inc/server.h>
-std::vector<std::vector<std::string>> DomainSocketServer::fileParser(std::string path){
+std::vector<std::vector<std::string>> DomainSocketServer::fileParser(std::string path) const{
  
 	std::vector<std::vector<std::string>> content;
 	std::vector<std::string> row;
@@ -28,7 +28,7 @@ std::vector<std::vector<std::string>> DomainSocketServer::fileParser(std::string
   }
 }
 
-std::vector<std::string> DomainSocketServer::stringParser(std::string str) {
+std::vector<std::string> DomainSocketServer::stringParser(std::string str) const{
   // Vector of string to save tokens
   std::vector <std::string> tokens;
      
@@ -46,20 +46,20 @@ std::vector<std::string> DomainSocketServer::stringParser(std::string str) {
   return tokens;
 }
 
-bool DomainSocketServer::charFinder(std::string str) {
+bool DomainSocketServer::charFinder(std::string str) const{
   std::size_t found = str.find(kEoT);
   if (found != std::string::npos)
     return true;
   return false;
 }
 
-std::string DomainSocketServer::stringConverter(char *ch) {
+std::string DomainSocketServer::stringConverter(char *ch) const{
   std::string str = ch;
   
   return str;
 }
 
-bool DomainSocketServer::checker(std::string key, std::vector<std::string> str) {
+bool DomainSocketServer::checker(std::string key, std::vector<std::string> str) const{
   bool b = true;
   if (str[1] == "x") {
     for (int i = 2; i < str.size(); i++) {
@@ -77,7 +77,7 @@ bool DomainSocketServer::checker(std::string key, std::vector<std::string> str) 
   }
 }
 
-std::string DomainSocketServer::searcher(std::vector<std::string> str, std::vector<std::vector<std::string>> fi) {
+std::string DomainSocketServer::searcher(std::vector<std::string> str, std::vector<std::vector<std::string>> fi) const{
   std::string nl = "\n";
   std::string results = "";
   std::string temp = "";
@@ -115,7 +115,7 @@ std::string DomainSocketServer::searcher(std::vector<std::string> str, std::vect
   }
 }
 
-void DomainSocketServer::bufferWriter(int start, int end, std::string str, char ch[]) {
+void DomainSocketServer::bufferWriter(int start, int end, std::string str, char ch[]) const{
   int j = 0;
   for (int i = start; i < end; i++) {
     ch[j] = str[i];
