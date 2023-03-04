@@ -17,7 +17,7 @@ class DomainSocketServer : public UnixDomainSocket {
   bool charFinder(std::string str);
   void seeking(std::string str);
   bool checker(std::string key, std::vector<std::string> str);
-  void bufferWriter(int start, int end, std::string str, char ch);
+  void bufferWriter(int start, int end, std::string str, char ch[]);
   void RunServer() {
     int sock_fd;  // unnamed socket file descriptor
     int client_req_sock_fd;  // client connect request socket file descriptor

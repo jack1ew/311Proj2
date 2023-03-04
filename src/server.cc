@@ -2,18 +2,18 @@
 #include <proj2/inc/server.h>
 std::vector<std::vector<std::string>> DomainSocketServer::fileParser(std::string path){
  
-	vector<vector<string>> content;
-	vector<string> row;
-	string line, word;
+	std::vector<std::vector<std::string>> content;
+	std::vector<std::string> row;
+	std::string line, word;
  
-	fstream file (path, ios::in);
+	std::fstream file (path, ios::in);
 	if(file.is_open())
 	{
 		while(getline(file, line))
 		{
 			row.clear();
  
-			stringstream str(line);
+			std::stringstream str(line);
  
 			while(getline(str, word, ','))
 				row.push_back(word);
