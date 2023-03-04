@@ -18,6 +18,7 @@
 #include <algorithm>
 #include <vector>
 #include <fstream>
+#include <sstream>
 
 class UnixDomainSocket {
  public:

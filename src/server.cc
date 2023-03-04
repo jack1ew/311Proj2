@@ -121,6 +121,5 @@ void DomainSocketServer::bufferWriter(int start, int end, std::string str, char 
     ch[j] = str[i];
     j += 1;
   }
-  return ch;
 }
 
