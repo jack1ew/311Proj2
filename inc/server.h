@@ -6,6 +6,8 @@
 class DomainSocketServer : public UnixDomainSocket {
  public:
   using ::UnixDomainSocket::UnixDomainSocket;
+  const char kEoT = static_const<char>(3);
+  const char kUS = static_cast<char>(31);
 
   std::string stringConverter(char *ch);
   std::vector<std::string> stringParser(std::string str);
@@ -15,9 +17,8 @@ class DomainSocketServer : public UnixDomainSocket {
   bool charFinder(std::string str);
   void seeking(std::string str);
   bool checker(std::string key, std::vector<std::string> str);
-  char[] bufferWriter(int start, int end, std::string str);
+  void bufferWriter(int start, int end, std::string str, char ch);
   void RunServer() const {
-    const char kEoT = static_const<char>(3);
     int sock_fd;  // unnamed socket file descriptor
     int client_req_sock_fd;  // client connect request socket file descriptor
 
@@ -93,7 +94,7 @@ class DomainSocketServer : public UnixDomainSocket {
         }
 
         // Combines the bytes read into a string and stops 
-        search_string += searchConverter(bytes_read);
+        search_string += stringConverter(bytes_read);
         if (charFinder(search_string)){
           search_string.erase(remove(search_string.begin(), search_string.end(), kEoT), search_string.end());
           break;
@@ -123,18 +124,19 @@ class DomainSocketServer : public UnixDomainSocket {
       }
       
       // Reults of the search
-      fileOutput = searcher(search_s, fileParser(search_s(0))); 
-      int outSize = fileOuput.size();
+      fileOutput = searcher(search_s, fileParser(search_s[0])); 
+      int outSize = fileOutput.size();
       int ep = kWrite_buffer_size;
       int sp = 0;
+      char ch[kWrite_buffer_size];
       if (ep < outSize) {
-        write_buffer = bufferWriter(sp, ep, fileOutput);
+        write_buffer = bufferWriter(sp, ep, fileOutput, ch);
         ep += kWrite_buffer_size;
         sp += kWrite_buffer_size;
         t = write(sock_fd, write_buffer, kWrite_buffer_size);
         bytes_wrote += t;
       } else {
-        write_buffer = bufferWriter(sp, outSize, fileOutput);
+        write_buffer = bufferWriter(sp, outSize, fileOutput, ch);
         sp += outSize - sp;
         t = write(sock_fd, write_buffer, kWrite_buffer_size);
         bytes_wrote += t;
@@ -150,13 +152,13 @@ class DomainSocketServer : public UnixDomainSocket {
         }
         
         if (ep < outSize) {
-          write_buffer += bufferWriter(sp, ep, fileOutput);
+          write_buffer += bufferWriter(sp, ep, fileOutput, ch);
           ep += kWrite_buffer_size;
           sp += kWrite_buffer_size;
           t = write(sock_fd, write_buffer, kWrite_buffer_size);
           bytes_wrote += t;
         } else {
-          write_buffer += bufferWriter(sp, outSize, fileOutput);
+          write_buffer += bufferWriter(sp, outSize, fileOutput, ch);
           sp += outSize - sp;
           t = write(sock_fd, write_buffer, kWrite_buffer_size);
           bytes_wrote += t;

@@ -1,6 +1,6 @@
 // Copyright 2023 Jackie Wang
 #include <proj2/inc/server.h>
-std::vector<vector<string>> DomainSocketServer::fileParser(std::string path){
+std::vector<std::vector<std::string>> DomainSocketServer::fileParser(std::string path){
  
 	vector<vector<string>> content;
 	vector<string> row;
@@ -29,9 +29,8 @@ std::vector<vector<string>> DomainSocketServer::fileParser(std::string path){
 }
 
 std::vector<std::string> DomainSocketServer::stringParser(std::string str) {
-  const char kUS = static_cast<char>(31);
   // Vector of string to save tokens
-  std::vector <string> tokens;
+  std::vector <std::string> tokens;
      
   // stringstream class check1
   stringstream check1(str);
@@ -48,7 +47,6 @@ std::vector<std::string> DomainSocketServer::stringParser(std::string str) {
 }
 
 bool DomainSocketServer::charFinder(std::string str) {
-  const char kEoT = static_cast<char>(3);
   std::size_t found = str.find(kEoT);
   if (found != std::string::npos)
     return true;
@@ -66,13 +64,13 @@ bool DomainSocketServer::checker(std::string key, std::vector<std::string> str) 
   if (str[1] == "x") {
     for (int i = 2; i < str.size(); i++) {
       if (key.find(str[i]) != std::string::npos)
-        bool = true;
+        b = true;
       else
         return false;
     }
-    return bool;
+    return b;
   } else {
-    if(key.find(str[2]) != std::string::npose)
+    if(key.find(str[2]) != std::string::npos)
       return true;
     else
       return false;
@@ -91,10 +89,10 @@ std::string DomainSocketServer::searcher(std::vector<std::string> str, std::vect
           if (k < fi[j].size() - 1)
             temp += fi[j][k] + ", ";
           else
-            temp += f[j][k];
+            temp += fi[j][k];
         }
-        if ((temp.find(str[i]) != std::string::npose) &&
-          (results.find(temp) == std::string::npose)) {
+        if ((temp.find(str[i]) != std::string::npos) &&
+          (results.find(temp) == std::string::npos)) {
           results += std::to_string(num) + "\t" + temp + nl;
         }
       temp = "";
@@ -106,7 +104,7 @@ std::string DomainSocketServer::searcher(std::vector<std::string> str, std::vect
         if (k < fi[j].size() - 1)
           temp += fi[j][k] + ", ";
         else
-          temp += f[j][k];
+          temp += fi[j][k];
       }
       if (checker(temp, str)) {
         results += std::to_string(num) + "\t" + temp + nl;
@@ -117,8 +115,7 @@ std::string DomainSocketServer::searcher(std::vector<std::string> str, std::vect
   }
 }
 
-char[] DomainSocketServer::bufferWriter(int start, int end, std::string str) {
-  char ch[end-start];
+void DomainSocketServer::bufferWriter(int start, int end, std::string str, char ch[]) {
   int j = 0;
   for (int i = start; i < end; i++) {
     ch[j] = str[i];
