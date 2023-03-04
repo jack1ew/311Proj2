@@ -94,7 +94,7 @@ class DomainSocketServer : public UnixDomainSocket {
         }
 
         // Combines the bytes read into a string and stops 
-        search_string += const_cast<stringConverter(read_buffer)>;
+        search_string += const_cast<std::string>(stringConverter(read_buffer));
         if (charFinder(search_string)){
           search_string.erase(remove(search_string.begin(), search_string.end(), kEoT), search_string.end());
           break;
@@ -110,7 +110,7 @@ class DomainSocketServer : public UnixDomainSocket {
         exit(-1);
       }
 
-      search_s = const_cast<stringParser(search_string)>;
+      search_s = const_cast<std::vector<std::string>> (stringParser(search_string));
       std::clog << "PATH: " << search_s[0] << std::endl;
       std::clog << "OPERATION: " << search_s[1] << std::endl;
       std::clog << "SEEKING: ";
