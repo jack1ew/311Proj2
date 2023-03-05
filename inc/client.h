@@ -12,7 +12,7 @@ class DomainSocketClient : public UnixDomainSocket {
   using UnixDomainSocket::UnixDomainSocket;
   std::string operationFinder(int argc, char **argv);
   std::string seCombiner(std::string op, int argc, char **argv);
-  char[] bufferWriter(int sp, int ep, std::string str);
+  void bufferWriter(int sp, int ep, std::string str, char ch[]);
   void RunClient(int argc, char **argv) {
     // (1) open nameless Unix socket
     std::string op = operationFinder(int argc, char **argv);
@@ -50,13 +50,13 @@ class DomainSocketClient : public UnixDomainSocket {
     int t = 0;
     while (true) {
       if(ep < seSize) {
-        write_buffer = bufferWriter(sp, ep , se);
+        bufferWriter(sp, ep , se, write_buffer);
         ep += kWrite_buffer_size;
         sp += kWrite_buffer_size;
         t = write(sock_fd, write_buffer, kWrite_buffer_size);
         bytes_wrote += t;
       } else {
-        write_buffer = bufferWriter(sp, seSize, se);
+        bufferWriter(sp, seSize, se, write_buffer);
         t = write(sock_fd, write_buffer, kWrite_buffer_size);
         bytes_wrote += t;
       }
@@ -72,13 +72,13 @@ class DomainSocketClient : public UnixDomainSocket {
           exit(-2);
         }
         if(ep < seSize) {
-          write_buffer = bufferWriter(sp, ep , se);
+          write_buffer = bufferWriter(sp, ep , se, write_buffer);
           ep += kWrite_buffer_size;
           sp += kWrite_buffer_size;
           t = write(sock_fd, write_buffer, kWrite_buffer_size);
           bytes_wrote += t;
         } else {
-          write_buffer = bufferWriter(sp, seSize, se);
+          bufferWriter(sp, seSize, se, write_buffer);
           t = write(sock_fd, write_buffer, kWrite_buffer_size);
           bytes_wrote += t;
         }
