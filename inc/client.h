@@ -53,11 +53,11 @@ class DomainSocketClient : public UnixDomainSocket {
         bufferWriter(sp, ep , se, write_buffer);
         ep += kWrite_buffer_size;
         sp += kWrite_buffer_size;
-        t = write(sock_fd, write_buffer, kWrite_buffer_size);
+        t = write(socket_fd, write_buffer, kWrite_buffer_size);
         bytes_wrote += t;
       } else {
         bufferWriter(sp, seSize, se, write_buffer);
-        t = write(sock_fd, write_buffer, kWrite_buffer_size);
+        t = write(socket_fd, write_buffer, kWrite_buffer_size);
         bytes_wrote += t;
       }
       while (t > 0) {
@@ -75,11 +75,11 @@ class DomainSocketClient : public UnixDomainSocket {
           write_buffer = bufferWriter(sp, ep , se, write_buffer);
           ep += kWrite_buffer_size;
           sp += kWrite_buffer_size;
-          t = write(sock_fd, write_buffer, kWrite_buffer_size);
+          t = write(socket_fd, write_buffer, kWrite_buffer_size);
           bytes_wrote += t;
         } else {
           bufferWriter(sp, seSize, se, write_buffer);
-          t = write(sock_fd, write_buffer, kWrite_buffer_size);
+          t = write(socket_fd, write_buffer, kWrite_buffer_size);
           bytes_wrote += t;
         }
       }
