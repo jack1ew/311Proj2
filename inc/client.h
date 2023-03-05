@@ -15,7 +15,7 @@ class DomainSocketClient : public UnixDomainSocket {
   void bufferWriter(int sp, int ep, std::string str, char ch[]);
   void RunClient(int argc, char **argv) {
     // (1) open nameless Unix socket
-    std::string op = operationFinder(int argc, char **argv);
+    std::string op = operationFinder(argc, argv);
     std::string se = seCombiner(op, argc, argv);
     int socket_fd = socket(AF_UNIX, SOCK_STREAM, 0);
     if (socket_fd < 0) {
@@ -41,7 +41,8 @@ class DomainSocketClient : public UnixDomainSocket {
     // (3) write to socket
     const size_t kRead_buffer_size = 32;  // read 4 byte increaments
     char read_buffer[kRead_buffer_size];
-    int bytes_read;
+    int bytes_read = 0;
+    int bytes_wrote = 0;
     const ssize_t kWrite_buffer_size = 64;
     char write_buffer[kWrite_buffer_size];
     int ep = kWrite_buffer_size;
@@ -72,7 +73,7 @@ class DomainSocketClient : public UnixDomainSocket {
           exit(-2);
         }
         if(ep < seSize) {
-          write_buffer = bufferWriter(sp, ep , se, write_buffer);
+          bufferWriter(sp, ep , se, write_buffer);
           ep += kWrite_buffer_size;
           sp += kWrite_buffer_size;
           t = write(socket_fd, write_buffer, kWrite_buffer_size);
@@ -83,7 +84,7 @@ class DomainSocketClient : public UnixDomainSocket {
           bytes_wrote += t;
         }
       }
-      t = read(client_req_sock_fd, read_buffer, kRead_buffer_size);
+      t = read(socket_fd, read_buffer, kRead_buffer_size);
 
       const char kKill_msg[] = "quit";
       while (t > 0) {
@@ -95,14 +96,14 @@ class DomainSocketClient : public UnixDomainSocket {
         }
 
         std::cout.write(read_buffer, bytes_read);
-        t = read(client_req_sock_fd, read_buffer, kRead_buffer_size);
+        t = read(socket_fd, read_buffer, kRead_buffer_size);
         bytes_read += t;
       }
       std::clog << "BYTES READ" << bytes_read;
       if (t == 0) {
-        std::cout << "Client disconnected" << std::endl;
+        std::cout << "Server disconnected" << std::endl;
 
-        close(client_req_sock_fd);
+        close(socket_fd);
       } else if (t < 0) {
         std::cerr << strerror(errno) << std::endl;
 
