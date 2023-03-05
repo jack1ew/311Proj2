@@ -28,20 +28,19 @@ std::string DomainSocketClient::seCombiner(std::string op, int argc, char **argv
   std::string se = argc[2] + kUS + op + kUS;
   for (int i = 3; i < argc; i+=2) {
     if (i == argc - 1) {
-      se += argc[i] + kEoT;
+      se += argv[i] + kEoT;
     } else {
-      se += argc[i] + kUS;
+      se += argv[i] + kUS;
     }
   }
   return se;
 }
-ch[] DomainSocketClient::bufferWriter(int start, int end, std::string str) {
-  char ch[end-start];
+void DomainSocketClient::bufferWriter(int start, int end, std::string str, char ch[]) {
   int j = 0;
   for (int i = start; i < end; i++) {
     ch[j] = str[i];
     j += 1;
   }
-  return ch;
+
 }
 
