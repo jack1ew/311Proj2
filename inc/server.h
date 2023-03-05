@@ -133,12 +133,12 @@ class DomainSocketServer : public UnixDomainSocket {
         bufferWriter(sp, ep, fileOutput, write_buffer);
         ep += kWrite_buffer_size;
         sp += kWrite_buffer_size;
-        t = write(sock_fd, write_buffer, kWrite_buffer_size);
+        t = write(client_req_sock_fd, write_buffer, kWrite_buffer_size);
         bytes_wrote += t;
       } else {
         bufferWriter(sp, outSize, fileOutput, write_buffer);
         sp += outSize - sp;
-        t = write(sock_fd, write_buffer, kWrite_buffer_size);
+        t = write(client_req_sock_fd, write_buffer, kWrite_buffer_size);
         bytes_wrote += t;
       }
       while(t > 0) {
@@ -155,12 +155,12 @@ class DomainSocketServer : public UnixDomainSocket {
           bufferWriter(sp, ep, fileOutput, write_buffer);
           ep += kWrite_buffer_size;
           sp += kWrite_buffer_size;
-          t = write(sock_fd, write_buffer, kWrite_buffer_size);
+          t = write(client_req_sock_fd, write_buffer, kWrite_buffer_size);
           bytes_wrote += t;
         } else {
           bufferWriter(sp, outSize, fileOutput, write_buffer);
           sp += outSize - sp;
-          t = write(sock_fd, write_buffer, kWrite_buffer_size);
+          t = write(client_req_sock_fd, write_buffer, kWrite_buffer_size);
           bytes_wrote += t;
         }
       }

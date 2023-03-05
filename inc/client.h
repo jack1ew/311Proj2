@@ -15,18 +15,30 @@ class DomainSocketClient : public UnixDomainSocket {
   void bufferWriter(int sp, int ep, std::string str, char ch[]);
   void RunClient(int argc, char **argv) {
     // (1) open nameless Unix socket
-    std::string op = operationFinder(argc, argv);
-    std::string se = seCombiner(op, argc, argv);
+    
     int socket_fd = socket(AF_UNIX, SOCK_STREAM, 0);
+    std::string server = argv[1];
     if (socket_fd < 0) {
       std::cerr << strerror(errno) << std::endl;
       exit(-1);
     }
+    if (server == NULL) {
+      std::cerr << "No host given" << std::endl;
+    }
+    if(argv[2] == NULL) {
+      std::cerr << "Nothing to search for" << std::endl;
+      exit(2);
+    }
+    if(argv[3] == NULL) {
+      op = "n/a";
+    } else {
+      std::string op = operationFinder(argc, argv);
+    }
+    std::string se = seCombiner(op, argc, argv);
     if(op == "MIXED") {
       std::cerr << "Mixed boolean operations not presently supported" << std::endl;
       exit(2);
     }
-
     // (2) connect to an existing socket
     int success = connect(socket_fd,
                           // sockaddr_un is a Unix sockaddr
