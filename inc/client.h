@@ -17,14 +17,14 @@ class DomainSocketClient : public UnixDomainSocket {
     // (1) open nameless Unix socket
     
     int socket_fd = socket(AF_UNIX, SOCK_STREAM, 0);
-    std::string server = argv[1];
     std::string op;
     if (socket_fd < 0) {
       std::cerr << strerror(errno) << std::endl;
       exit(-1);
     }
-    if (server == NULL) {
+    if (argv[1] == NULL) {
       std::cerr << "No host given" << std::endl;
+      exit(-1);
     }
     if(argv[2] == NULL) {
       std::cerr << "Nothing to search for" << std::endl;
