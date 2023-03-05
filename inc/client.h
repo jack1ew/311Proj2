@@ -18,6 +18,7 @@ class DomainSocketClient : public UnixDomainSocket {
     
     int socket_fd = socket(AF_UNIX, SOCK_STREAM, 0);
     std::string server = argv[1];
+    std::string op;
     if (socket_fd < 0) {
       std::cerr << strerror(errno) << std::endl;
       exit(-1);
@@ -32,7 +33,7 @@ class DomainSocketClient : public UnixDomainSocket {
     if(argv[3] == NULL) {
       op = "n/a";
     } else {
-      std::string op = operationFinder(argc, argv);
+      op = operationFinder(argc, argv);
     }
     std::string se = seCombiner(op, argc, argv);
     if(op == "MIXED") {
