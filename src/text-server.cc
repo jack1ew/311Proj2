@@ -2,6 +2,6 @@
 #include <proj2/inc/server.h>
 
 int main(int argc, char** argv) {
-  DomainSocketServer dss();
+  DomainSocketServer dss(argv[1]);
   dss.RunServer();
 }
