@@ -5,7 +5,7 @@ std::string DomainSocketClient::operationFinder(int argc, char **argv) {
   bool b = true;
   std::string a;
   if (argc == 4) {
-    return "n/a"
+    return "n/a";
   }
   for (int i = 4; i < argc - 1; i+=2) {
     if (argv[i] == argv[4]) {
