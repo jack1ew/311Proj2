@@ -16,7 +16,7 @@ class DomainSocketClient : public UnixDomainSocket {
   void RunClient(int argc, char **argv) {
     // (1) open nameless Unix socket
     std::string op = operationFinder(int argc, char **argv);
-    std::string se = seCombiner(op, int argc, char **argv);
+    std::string se = seCombiner(op, argc, argv);
     int socket_fd = socket(AF_UNIX, SOCK_STREAM, 0);
     if (socket_fd < 0) {
       std::cerr << strerror(errno) << std::endl;
