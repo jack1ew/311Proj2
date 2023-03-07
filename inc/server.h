@@ -136,7 +136,7 @@ class DomainSocketServer : public UnixDomainSocket {
         t = write(client_req_sock_fd, write_buffer, kWrite_buffer_size);
         bytes_wrote += t;
       } else {
-        std::cout >> write_buffer >> std::endl;
+        std::cout << write_buffer << std::endl;
         bufferWriter(sp, outSize, fileOutput, write_buffer);
         sp += outSize - sp;
         t = write(client_req_sock_fd, write_buffer, kWrite_buffer_size);
