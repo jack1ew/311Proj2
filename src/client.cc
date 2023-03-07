@@ -27,7 +27,8 @@ std::string DomainSocketClient::operationFinder(int argc, char **argv) {
 std::string DomainSocketClient::seCombiner(std::string op, int argc, char **argv) {
   const char kUS = static_cast<char>(31);
   const char kEoT = static_cast<char>(3);
-  std::string se = argv[2] + kUS + op + kUS + argv[3];
+  std::string se = ""; 
+  se += argv[2] + kUS + op + kUS + argv[3];
   if (argc > 5) {
     for (int i = 5; i < argc; i+=2) {
       if (i == argc - 1) {
