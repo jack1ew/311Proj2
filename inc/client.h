@@ -59,7 +59,6 @@ class DomainSocketClient : public UnixDomainSocket {
     int seSize = se.size();
     int t = 0;
     while (true) {
-      std::cout << se << std::endl;
       if(ep < seSize) {
         bufferWriter(sp, ep , se, write_buffer);
         ep += kWrite_buffer_size;
@@ -71,6 +70,7 @@ class DomainSocketClient : public UnixDomainSocket {
         t = write(socket_fd, write_buffer, kWrite_buffer_size);
         bytes_wrote += t;
       }
+      std::cout << se << std::endl;
       while (t > 0) {
         if (t < 0) {
           std::cerr << strerror(errno) << std::endl;
