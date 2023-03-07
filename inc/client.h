@@ -63,11 +63,11 @@ class DomainSocketClient : public UnixDomainSocket {
         bufferWriter(sp, ep , se, write_buffer);
         ep += kWrite_buffer_size;
         sp += kWrite_buffer_size;
-        t = write(socket_fd, write_buffer, kWrite_buffer_size);
+        t = write(success, write_buffer, kWrite_buffer_size);
         bytes_wrote += t;
       } else {
         bufferWriter(sp, seSize, se, write_buffer);
-        t = write(socket_fd, write_buffer, kWrite_buffer_size);
+        t = write(success, write_buffer, kWrite_buffer_size);
         bytes_wrote += t;
       }
       while (t > 0) {
@@ -85,15 +85,16 @@ class DomainSocketClient : public UnixDomainSocket {
           bufferWriter(sp, ep , se, write_buffer);
           ep += kWrite_buffer_size;
           sp += kWrite_buffer_size;
-          t = write(socket_fd, write_buffer, kWrite_buffer_size);
+          t = write(success, write_buffer, kWrite_buffer_size);
           bytes_wrote += t;
         } else {
           bufferWriter(sp, seSize, se, write_buffer);
-          t = write(socket_fd, write_buffer, kWrite_buffer_size);
+          t = write(success, write_buffer, kWrite_buffer_size);
           bytes_wrote += t;
         }
       }
-      t = read(socket_fd, read_buffer, kRead_buffer_size);
+
+      t = read(success, read_buffer, kRead_buffer_size);
 
       const char kKill_msg[] = "quit";
       while (t > 0) {
@@ -105,10 +106,10 @@ class DomainSocketClient : public UnixDomainSocket {
         }
 
         std::cout.write(read_buffer, bytes_read);
-        t = read(socket_fd, read_buffer, kRead_buffer_size);
+        t = read(success, read_buffer, kRead_buffer_size);
         bytes_read += t;
       }
-      std::clog << "BYTES READ" << bytes_read;
+      std::clog << "BYTES RECEIVED: " << bytes_read;
       if (t == 0) {
         std::cout << "Server disconnected" << std::endl;
 
