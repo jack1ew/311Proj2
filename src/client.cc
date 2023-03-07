@@ -37,7 +37,7 @@ std::string DomainSocketClient::seCombiner(std::string op, int argc, char **argv
       }
     }
   } else {
-    se += kEoT
+    se += kEoT;
   }
   return se;
 }
