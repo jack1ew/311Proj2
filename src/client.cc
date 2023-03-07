@@ -28,11 +28,13 @@ std::string DomainSocketClient::seCombiner(std::string op, int argc, char **argv
   const char kUS = static_cast<char>(31);
   const char kEoT = static_cast<char>(3);
   std::string se = argv[2] + kUS + op + kUS;
-  for (int i = 3; i < argc; i+=2) {
-    if (i == argc - 1) {
-      se += argv[i] + kEoT;
-    } else {
-      se += argv[i] + kUS;
+  if (argc > 5) {
+    for (int i = 5; i < argc; i+=2) {
+      if (i == argc - 1) {
+        se += argv[i] + kEoT;
+      } else {
+        se += argv[i] + kUS;
+      }
     }
   }
   return se;
