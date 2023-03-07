@@ -126,6 +126,7 @@ class DomainSocketServer : public UnixDomainSocket {
       // Reults of the search
       std::vector<std::vector<std::string>> out = fileParser(search_s[0]);
       fileOutput = searcher(search_s, out); 
+      std::cout << fileOutput << std::endl;
       int outSize = fileOutput.size();
       int ep = kWrite_buffer_size;
       int sp = 0;
@@ -136,7 +137,6 @@ class DomainSocketServer : public UnixDomainSocket {
         t = write(client_req_sock_fd, write_buffer, kWrite_buffer_size);
         bytes_wrote += t;
       } else {
-        std::cout << "HUB" << std::endl;
         bufferWriter(sp, outSize, fileOutput, write_buffer);
         sp += outSize - sp;
         t = write(client_req_sock_fd, write_buffer, kWrite_buffer_size);
