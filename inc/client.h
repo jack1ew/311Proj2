@@ -59,6 +59,7 @@ class DomainSocketClient : public UnixDomainSocket {
     int seSize = se.size();
     int t = 0;
     while (true) {
+      std::cout << "Printing" << std::endl;
       if(ep < seSize) {
         bufferWriter(sp, ep , se, write_buffer);
         ep += kWrite_buffer_size;
