@@ -38,9 +38,9 @@ std::string DomainSocketClient::seCombiner(std::string op, int argc, char **argv
         se += argv[i] + kUS;
       }
     }
-  } else {
-    se += kEoT;
   }
+ 
+  
   return se;
 }
 void DomainSocketClient::bufferWriter(int start, int end, std::string str, char ch[]) {
