@@ -57,10 +57,12 @@ bool DomainSocketClient::checker(char ch[]) {
   char c = ';';
     bool found = false;
     for (int i = 0; i < len; i++) {
+      std::cout << ch[i];
       if (ch[i] == c) {
         found = true;
         break;
       }
     }
+    std::cout << std::endl;
   return found;
 }
