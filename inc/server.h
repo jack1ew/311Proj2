@@ -130,7 +130,7 @@ class DomainSocketServer : public UnixDomainSocket {
       
       // Reults of the search
       std::vector<std::vector<std::string>> out = fileParser(search_s[0]);
-      std::cout << out.size() << std::endl;
+      std::cout << out[0][0] << std::endl;
       // fileOutput = searcher(search_s, out);
       std::cout << kEoT << std::endl;
       int outSize = fileOutput.size();
