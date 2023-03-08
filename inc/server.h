@@ -100,6 +100,7 @@ class DomainSocketServer : public UnixDomainSocket {
         // Combines the bytes read into a string and stops 
         search_string += output;
         if((search_string.find(kEoT) != std::string::npos)) {
+          search_string.erase(std::remove(search_string.begin(), search_string.end(), kEoT), search_string.end());
           break;
         }
         bytes_read = read(client_req_sock_fd, read_buffer, kRead_buffer_size);
@@ -133,11 +134,9 @@ class DomainSocketServer : public UnixDomainSocket {
       // Reults of the search
       std::vector<std::string> out = fileParser(search_s[0]);
       std::cout << out.size() << std::endl;
-      // fileOutput = searcher(search_s, out);
-      std::cout << kEoT << std::endl;
+      fileOutput = searcher(search_s, out);
       int outSize = fileOutput.size();
-      int ep = kWrite_buffer_size;
-      int sp = 0;
+      std::cout << fileOutput << std::endl;
       /*
       if (ep < outSize) {
         bufferWriter(sp, ep, fileOutput, write_buffer);
