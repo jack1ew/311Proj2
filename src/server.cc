@@ -34,7 +34,7 @@ std::vector<std::string> DomainSocketServer::stringParser(std::string str) const
   std::string intermediate;
    
   // Tokenizing w.r.t. space ' '
-  while(getline(check1, intermediate, '-'))
+  while(getline(check1, intermediate, kUS))
   {
     tokens.push_back(intermediate);
   }
