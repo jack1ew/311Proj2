@@ -54,7 +54,7 @@ class DomainSocketClient : public UnixDomainSocket {
     char read_buffer[kRead_buffer_size];
     int bytes_read = 0;
     int bytes_wrote = 0;
-    const ssize_t kWrite_buffer_size = 64;
+    const ssize_t kWrite_buffer_size = 10;
     char write_buffer[kWrite_buffer_size];
     int ep = kWrite_buffer_size;
     int sp = 0;
@@ -100,6 +100,7 @@ class DomainSocketClient : public UnixDomainSocket {
         }*/
         t = write(socket_fd, r, kWrite_buffer_size);
         bytes_wrote += t;
+        std::cout << t << std::endl;
       }
 
       t = read(socket_fd, read_buffer, kRead_buffer_size);
