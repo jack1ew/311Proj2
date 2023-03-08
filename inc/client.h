@@ -51,11 +51,11 @@ class DomainSocketClient : public UnixDomainSocket {
     std::clog << "SERVER CONNECTION ACCEPTED" << std::endl;
 
     // (3) write to socket
-    const size_t kRead_buffer_size = 32;  // read 4 byte increaments
+    const size_t kRead_buffer_size = 10;  // read 4 byte increaments
     char read_buffer[kRead_buffer_size];
     int bytes_read = 0;
     int bytes_wrote = 0;
-    const ssize_t kWrite_buffer_size = 1;
+    const ssize_t kWrite_buffer_size = 10;
     char write_buffer[kWrite_buffer_size];
     int ep = kWrite_buffer_size;
     int sp = 0;

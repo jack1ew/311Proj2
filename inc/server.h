@@ -64,7 +64,7 @@ class DomainSocketServer : public UnixDomainSocket {
     std::clog << "SERVER STARTED" << "\nMAX CLIENTS = " << kMax_client_conns << std::endl;
     const size_t kRead_buffer_size = 10;  // read 4 byte increaments
     char read_buffer[kRead_buffer_size];
-    const ssize_t kWrite_buffer_size = 64;
+    const ssize_t kWrite_buffer_size = 10;
     char write_buffer[kWrite_buffer_size];
     int bytes_read = 0;
     int bytes_wrote = 0;
