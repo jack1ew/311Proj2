@@ -39,7 +39,7 @@ std::string DomainSocketClient::seCombiner(std::string op, int argc, char **argv
       }
     }
   }
- 
+  se += kEoT; 
   
   return se;
 }
