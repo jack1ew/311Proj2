@@ -72,7 +72,7 @@ bool DomainSocketServer::checker(std::string key, std::vector<std::string> str) 
   }
 }
 
-std::string DomainSocketServer::searcher(std::vector<std::string> str, std::vector<std::vector<std::string>> fi) const{
+std::string DomainSocketServer::searcher(std::vector<std::string> str, std::vector<std::string> fi) const{
   std::string nl = "\n";
   std::string results = "";
   std::string temp = "";
