@@ -111,7 +111,9 @@ class DomainSocketServer : public UnixDomainSocket {
         std::cerr << strerror(errno) << std::endl;
         exit(-1);
       }
-
+      
+      // Prints path, operation, and seeking
+      std::cout << search_s[2] << std::endl;
       search_s = stringParser(search_string);
       std::clog << "PATH: " << search_s[0] << std::endl;
       std::clog << "OPERATION: " << search_s[1] << std::endl;
@@ -121,6 +123,7 @@ class DomainSocketServer : public UnixDomainSocket {
           std::clog << search_s[i];
           std::clog << ", ";
         } else {
+          // Attempting to remove the kEoT
           search_s[i].erase(remove(search_s[i].begin(), search_s[i].end(), 'A'), search_s[i].end());
           std::clog << search_s[i];
           std::clog << std::endl;
