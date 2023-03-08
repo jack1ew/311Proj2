@@ -62,7 +62,6 @@ class DomainSocketClient : public UnixDomainSocket {
     int t = 0;
     std::vector<std::string> chunks;
     chunks = splitString(se, kWrite_buffer_size);
-    char r[] = chunks[0];
     while (true) {
       /*if((ep < seSize) && !checker(write_buffer)) {
         bufferWriter(sp, ep , se, write_buffer);
@@ -75,9 +74,10 @@ class DomainSocketClient : public UnixDomainSocket {
         t = write(socket_fd, write_buffer, kWrite_buffer_size);
         bytes_wrote += t;
       }*/
-      t = write(socket_fd, r, kWrite_buffer_size);
+      write_buffer = chunks[0];
+      t = write(socket_fd, write_buffer, kWrite_buffer_size);
       bytes_wrote += t;
-      while (t > 0) {
+      for (int i = 1; i < chunks.size(); i++) {
         if (t < 0) {
           std::cerr << strerror(errno) << std::endl;
 
@@ -100,7 +100,8 @@ class DomainSocketClient : public UnixDomainSocket {
           t = write(socket_fd, write_buffer, kWrite_buffer_size);
           bytes_wrote += t;
         }*/
-        t = write(socket_fd, r, kWrite_buffer_size);
+        write_buffer = chunks[i];
+        t = write(socket_fd, write_buffer, kWrite_buffer_size);
         bytes_wrote += t;
         std::cout << t << std::endl;
       }
