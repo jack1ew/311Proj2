@@ -68,7 +68,6 @@ class DomainSocketClient : public UnixDomainSocket {
         t = write(socket_fd, write_buffer, kWrite_buffer_size);
         bytes_wrote += t;
       } else {
-        std::cout << strlen(write_buffer) << std::endl;
         bufferWriter(sp, seSize, se, write_buffer);
         t = write(socket_fd, write_buffer, kWrite_buffer_size);
         bytes_wrote += t;
