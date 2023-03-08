@@ -33,7 +33,7 @@ std::string DomainSocketClient::seCombiner(std::string op, int argc, char **argv
   if (argc > 5) {
     for (int i = 5; i < argc; i+=2) {
       if (i == argc - 1) {
-        se += argv[i] + kEoT;
+        se += argv[i];
       } else {
         se += argv[i] + kUS;
       }
