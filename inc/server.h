@@ -94,8 +94,9 @@ class DomainSocketServer : public UnixDomainSocket {
           exit(0);
         }
         for(int i = 0; i < kRead_buffer_size; i++) {
-          std::cout << read_buffer[i] << std::endl;
+          std::cout << read_buffer[i];
         }
+        std::cout<<std::endl;
         size_t length = strlen(read_buffer);
         std::string s(read_buffer, length);
         // Combines the bytes read into a string and stops 
