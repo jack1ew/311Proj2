@@ -68,3 +68,9 @@ std::vector<std::string> DomainSocketClient::splitString(std::string str, int ch
   }
   return ret;
 }
+
+void DomainSocketClient::strcopy(char ch[], std::string str) {
+  for(int i = 0; i < 10; i++) {
+    ch[i] = str[i];
+  }
+}

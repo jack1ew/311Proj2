@@ -14,6 +14,7 @@ class DomainSocketClient : public UnixDomainSocket {
   std::string seCombiner(std::string op, int argc, char **argv);
   void bufferWriter(int sp, int ep, std::string str, char ch[]);
   std::vector<std::string> splitString(std::string str, int chunkSize);
+  void strcopy(char ch[], std::string str);
   void RunClient(int argc, char **argv) {
     // (1) open nameless Unix socket
     
@@ -74,7 +75,7 @@ class DomainSocketClient : public UnixDomainSocket {
         t = write(socket_fd, write_buffer, kWrite_buffer_size);
         bytes_wrote += t;
       }*/
-      strcpy(write_buffer, chunks[0].c_str());
+      strcpy(write_buffer, chunks[0]);
       t = write(socket_fd, write_buffer, kWrite_buffer_size);
       bytes_wrote += t;
       for (int i = 1; i < chunks.size(); i++) {
@@ -100,7 +101,7 @@ class DomainSocketClient : public UnixDomainSocket {
           t = write(socket_fd, write_buffer, kWrite_buffer_size);
           bytes_wrote += t;
         }*/
-        strcpy(write_buffer, chunks[i].c_str());
+        strcopy(write_buffer, chunks[i]);
         t = write(socket_fd, write_buffer, kWrite_buffer_size);
         bytes_wrote += t;
         std::cout << t << std::endl;
