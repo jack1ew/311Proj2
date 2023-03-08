@@ -14,6 +14,7 @@ std::vector<std::string> DomainSocketServer::fileParser(std::string path) const{
       str.push_back(sa);
 
     }
+    std::cout << "working" << std::endl;
     
     // Close the file object.
     new_file.close();
