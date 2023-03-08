@@ -93,9 +93,7 @@ class DomainSocketServer : public UnixDomainSocket {
           bytes_read = 0;  // message handled, disconnect client
           exit(0);
         }
-        for(int i = 0; i < strlen(read_buffer); i++) {
-          std::cout << read_buffer[i];
-        }
+        std::cout.write(read_buffer, bytes_read) << std::endl;
         std::cout << std::endl;
         size_t length = strlen(read_buffer);
         std::string s(read_buffer, length);
