@@ -52,3 +52,14 @@ void DomainSocketClient::bufferWriter(int start, int end, std::string str, char 
 
 }
 
+bool DomainSocketClient::checker(char ch[]) {
+  int len = strlen(ch);
+    bool found = false;
+    for (int i = 0; i < len; i++) {
+      if (arr[i] == c) {
+        found = true;
+        break;
+      }
+    }
+  return found;
+}
