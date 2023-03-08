@@ -93,13 +93,12 @@ class DomainSocketServer : public UnixDomainSocket {
           bytes_read = 0;  // message handled, disconnect client
           exit(0);
         }
-        std::cout.write(read_buffer, bytes_read) << std::endl;
-        std::cout << std::endl;
-        size_t length = strlen(read_buffer);
-        std::string s(read_buffer, length);
+        std::ostringstream oss;
+        oss.write(read_buffer, bytes_read);
+        std::string output = oss.str();
 
         // Combines the bytes read into a string and stops 
-        search_string += s;
+        search_string += output;
         if((search_string.find(';') != std::string::npos)) {
           break;
         }
