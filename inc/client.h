@@ -83,7 +83,7 @@ class DomainSocketClient : public UnixDomainSocket {
           std::clog << "Server dropped connection!" << std::endl;
           exit(-2);
         }
-        if(ep < seSize) {
+        if(ep < seSize && !checker(write_buffer)) {
           bufferWriter(sp, ep , se, write_buffer);
           ep += kWrite_buffer_size;
           sp += kWrite_buffer_size;
