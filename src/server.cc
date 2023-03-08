@@ -2,14 +2,15 @@
 #include <proj2/inc/server.h>
 std::vector<std::string> DomainSocketServer::fileParser(std::string path) const{
   std::vector<std::string> str;
-  std::fstream new_file (path, std::ios::in);
+  std::ifstream new_file (path);
   if (new_file.is_open()) { 
-    std::string sa;
+    std::string line;
     std::cout << path << std::endl;
     // Read data from the file object and put it into a string.
-    while (getline(new_file, sa)) { 
+    while (getline(new_file, line)) { 
+      std::istringstream ss(line);
       // Print the data of the string.
-      std::cout << sa << std::endl;
+      std::cout << line << std::endl;
       str.push_back(sa);
 
     }
