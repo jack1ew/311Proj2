@@ -9,8 +9,9 @@ std::vector<std::string> DomainSocketServer::fileParser(std::string path) const{
     // Read data from the file object and put it into a string.
     while (getline(new_file, sa)) { 
       // Print the data of the string.
-      std::cout << sa << std::endl;
-      str.push_back(sa);
+      std::stringstream s(sa);
+      std::cout << s << std::endl;
+      str.push_back(s);
 
     }
     std::cout << "working" << std::endl;
