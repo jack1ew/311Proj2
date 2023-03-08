@@ -1,22 +1,16 @@
 // Copyright 2023 Jackie Wang
 #include <proj2/inc/server.h>
-std::vector<std::vector<std::string>> DomainSocketServer::fileParser(std::string path) const{
-  std::vector<std::vector<std::string>> str;
-  std::vector<std::string> fields;
+std::vector<std::string> DomainSocketServer::fileParser(std::string path) const{
+  std::vector<std::string> str;
   std::string line;
-  std::ifstream new_file ("dat/bankloan2.csv");
+  std::ifstream new_file (path);
   if (new_file.is_open()) { 
     while (std::getline(new_file, line)) {
-      std::istringstream ss(line);
-      std::string field;
-      while (std::getline(ss, field, ',')) {
-        fields.push_back(field);
-      }
-      str.push_back(fields);
+      str.push_back(line);
     }
   } else {
     fields.push_back("INVALID FILE\n");
-    str.push_back(fields);
+    str.push_back(line);
     return str;
   }
 }
