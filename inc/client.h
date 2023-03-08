@@ -13,7 +13,7 @@ class DomainSocketClient : public UnixDomainSocket {
   std::string operationFinder(int argc, char **argv);
   std::string seCombiner(std::string op, int argc, char **argv);
   void bufferWriter(int sp, int ep, std::string str, char ch[]);
-  bool checker(char ch[]);
+  std::vector<std::string> splitString(std::string str, int chunkSize);
   void RunClient(int argc, char **argv) {
     // (1) open nameless Unix socket
     
@@ -60,7 +60,9 @@ class DomainSocketClient : public UnixDomainSocket {
     int sp = 0;
     int seSize = se.size();
     int t = 0;
-    const void *r = se.c_str();
+    std::vector<std::string> chunks;
+    chunks = splitString(se, kWrite_buffer_size);
+    char *r = chunks[0];
     while (true) {
       /*if((ep < seSize) && !checker(write_buffer)) {
         bufferWriter(sp, ep , se, write_buffer);

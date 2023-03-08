@@ -55,15 +55,16 @@ void DomainSocketClient::bufferWriter(int start, int end, std::string str, char 
 
 }
 
-bool DomainSocketClient::checker(char ch[]) {
-  int len = strlen(ch);
-    bool found = false;
-    char c = ';';
-    for (int i = 0; i < len; i++) {
-      if (ch[i] == c) {
-        found = true;
-        break;
-      }
-    }
-  return found;
+std::vector<std::string> DomainSocketClient::splitString(std::string str, int chunkSize) {
+  std::vector<std::string> ret;
+  int strLength = str.length();
+  int numChunks = strLength / chunkSize;
+  int remainingChars = strLength % chunkSize;
+  for (int i = 0; i < numChunks; i++) {
+    ret.push_back(str.substr(i * chunkSize, chunkSize));
+  }
+  if (remainingChars > 0) {
+    ret.push_back(str.substr(numChunks * chunkSize, remainingChars));
+  }
+  return ret;
 }
