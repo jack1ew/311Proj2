@@ -6,7 +6,7 @@ std::vector<std::vector<std::string>> DomainSocketServer::fileParser(std::string
   std::string line;
   std::ifstream new_file (path);
   if (new_file.is_open()) { 
-    while (std::getline(file, line)) {
+    while (std::getline(new_file, line)) {
       std::istringstream ss(line);
       std::string field;
       while (std::getline(ss, field, ',')) {
