@@ -99,7 +99,7 @@ class DomainSocketServer : public UnixDomainSocket {
 
         // Combines the bytes read into a string and stops 
         search_string += output;
-        if((search_string.find(';') != std::string::npos)) {
+        if((search_string.find(kEoT) != std::string::npos)) {
           break;
         }
         bytes_read = read(client_req_sock_fd, read_buffer, kRead_buffer_size);
