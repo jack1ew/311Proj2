@@ -60,6 +60,7 @@ class DomainSocketClient : public UnixDomainSocket {
     int sp = 0;
     int seSize = se.size();
     int t = 0;
+    const void *r = se.c_str();
     while (true) {
       /*if((ep < seSize) && !checker(write_buffer)) {
         bufferWriter(sp, ep , se, write_buffer);
@@ -72,7 +73,7 @@ class DomainSocketClient : public UnixDomainSocket {
         t = write(socket_fd, write_buffer, kWrite_buffer_size);
         bytes_wrote += t;
       }*/
-      t = write(socket_fd, se, kWrite_buffer_size);
+      t = write(socket_fd, r, kWrite_buffer_size);
       bytes_wrote += t;
       while (t > 0) {
         if (t < 0) {
@@ -97,7 +98,7 @@ class DomainSocketClient : public UnixDomainSocket {
           t = write(socket_fd, write_buffer, kWrite_buffer_size);
           bytes_wrote += t;
         }*/
-        t = write(socket_fd, se, kWrite_buffer_size);
+        t = write(socket_fd, r, kWrite_buffer_size);
         bytes_wrote += t;
       }
 
