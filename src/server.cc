@@ -9,8 +9,7 @@ std::vector<std::string> DomainSocketServer::fileParser(std::string path) const{
       str.push_back(line);
     }
   } else {
-    fields.push_back("INVALID FILE\n");
-    str.push_back(line);
+    str.push_back("INVALID FILE\n");
     return str;
   }
 }
