@@ -47,6 +47,7 @@ void DomainSocketClient::bufferWriter(int start, int end, std::string str, char 
   int j = 0;
   for (int i = start; i < end; i++) {
     ch[j] = str[i];
+    str[i] = NULL;
     std::cout << ch[j];
     j += 1;
   }
