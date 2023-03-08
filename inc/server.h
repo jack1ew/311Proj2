@@ -126,9 +126,7 @@ class DomainSocketServer : public UnixDomainSocket {
       // Reults of the search
       std::vector<std::string> out = fileParser(search_s[0]);
       // fileOutput = searcher(search_s, out);
-      for (int i = 0; i < out.size(); i++) {
-        std::cout << out[i] << std::endl;
-      } 
+        std::cout << out[i].size() << std::endl; 
       int outSize = fileOutput.size();
       int ep = kWrite_buffer_size;
       int sp = 0;
