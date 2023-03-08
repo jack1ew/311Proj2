@@ -49,18 +49,8 @@ bool DomainSocketServer::charFinder(std::string str) const{
   return false;
 }
 
-std::string DomainSocketServer::stringConverter(char *ch, int read_buffer) const{
-  
-  std::string str = "";
-  if (read_buffer == 32) {
-    for (int i = 1; i < read_buffer; i++) {
-      str += ch[i];
-    }
-  } else {
-    for (int i = 1; i < read_buffer - 1; i++) {
-      str += ch[i];
-    }
-  }
+std::string DomainSocketServer::stringConverter(char *ch) const{
+  std::string str = ch;
   return str;
 }
 

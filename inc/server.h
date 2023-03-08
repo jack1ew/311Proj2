@@ -9,7 +9,7 @@ class DomainSocketServer : public UnixDomainSocket {
   const char kEoT = static_cast<char>(3);
   const char kUS = static_cast<char>(31);
 
-  std::string stringConverter(char *ch, int read_buffer) const;
+  std::string stringConverter(char *ch) const;
   std::vector<std::string> stringParser(std::string str) const;
   std::vector<std::string> fileParser(std::string path) const;
   std::string searcher(std::vector<std::string> str, 
@@ -94,8 +94,7 @@ class DomainSocketServer : public UnixDomainSocket {
         }
 
         // Combines the bytes read into a string and stops 
-        search_string += stringConverter(read_buffer, bytes_read);
-        std::cout << bytes_read << std::endl;
+        search_string += stringConverter(read_buffer);
         bytes_read = read(client_req_sock_fd, read_buffer, kRead_buffer_size);
       }
       if (bytes_read == 0) {
