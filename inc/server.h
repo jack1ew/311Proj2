@@ -103,7 +103,6 @@ class DomainSocketServer : public UnixDomainSocket {
         }
         bytes_read = read(client_req_sock_fd, read_buffer, kRead_buffer_size);
       }
-      std::cout << search_string.size() << std::endl;
       if (bytes_read == 0) {
         std::cout << "Client disconnected" << std::endl;
         
