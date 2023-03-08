@@ -119,7 +119,7 @@ class DomainSocketServer : public UnixDomainSocket {
           std::clog << search_s[i];
           std::clog << ", ";
         } else {
-          search_s[i].erase(remove(search_s[i].begin(), search_s[i].end(), kEoT), search_s[i].end());
+          search_s[i].erase(search_s[i].size() - 1, 1);
           std::clog << search_s[i];
           std::clog << std::endl;
         }
