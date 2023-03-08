@@ -75,7 +75,7 @@ class DomainSocketClient : public UnixDomainSocket {
         t = write(socket_fd, write_buffer, kWrite_buffer_size);
         bytes_wrote += t;
       }*/
-      strcpy(write_buffer, chunks[0]);
+      strcopy(write_buffer, chunks[0]);
       t = write(socket_fd, write_buffer, kWrite_buffer_size);
       bytes_wrote += t;
       for (int i = 1; i < chunks.size(); i++) {
