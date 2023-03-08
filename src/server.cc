@@ -50,10 +50,8 @@ bool DomainSocketServer::charFinder(std::string str) const{
 }
 
 std::string DomainSocketServer::stringConverter(char *ch) const{
-  std::string str = ch[0];
-  for(int i = 1; i < strlen(ch); i++) {
-    str += ch[i];
-  }
+  std::string str;
+  str.assign(ch, ch + strlen(ch));
   return str;
 }
 
