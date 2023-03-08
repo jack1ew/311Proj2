@@ -124,12 +124,15 @@ class DomainSocketServer : public UnixDomainSocket {
       }
       
       // Reults of the search
-      std::cout >> search_s[0] >> std::endl;
       std::vector<std::string> out = fileParser(search_s[0]);
-      // fileOutput = searcher(search_s, out); 
+      // fileOutput = searcher(search_s, out);
+      for (int i = 0; i < out.size(); i++) {
+        std::cout << out[i] << std::endl;
+      } 
       int outSize = fileOutput.size();
       int ep = kWrite_buffer_size;
       int sp = 0;
+      /*
       if (ep < outSize) {
         bufferWriter(sp, ep, fileOutput, write_buffer);
         ep += kWrite_buffer_size;
@@ -168,7 +171,7 @@ class DomainSocketServer : public UnixDomainSocket {
       std::clog << "BYTES SENT: " << bytes_wrote << "\n";
       if (out[0] == "INVALID FILE\n")
         close(client_req_sock_fd);
-      
+     */ 
     }
   }
 };
