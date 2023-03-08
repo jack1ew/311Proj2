@@ -13,6 +13,7 @@ class DomainSocketClient : public UnixDomainSocket {
   std::string operationFinder(int argc, char **argv);
   std::string seCombiner(std::string op, int argc, char **argv);
   void bufferWriter(int sp, int ep, std::string str, char ch[]);
+  bool checker(char ch[]);
   void RunClient(int argc, char **argv) {
     // (1) open nameless Unix socket
     
@@ -59,7 +60,7 @@ class DomainSocketClient : public UnixDomainSocket {
     int seSize = se.size();
     int t = 0;
     while (true) {
-      if(ep < seSize) {
+      if((ep < seSize) && !checker(write_buffer)) {
         bufferWriter(sp, ep , se, write_buffer);
         ep += kWrite_buffer_size;
         sp += kWrite_buffer_size;
