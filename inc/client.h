@@ -62,7 +62,7 @@ class DomainSocketClient : public UnixDomainSocket {
     int t = 0;
     std::vector<std::string> chunks;
     chunks = splitString(se, kWrite_buffer_size);
-    char *r = chunks[0];
+    char r[] = chunks[0];
     while (true) {
       /*if((ep < seSize) && !checker(write_buffer)) {
         bufferWriter(sp, ep , se, write_buffer);
