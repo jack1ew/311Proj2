@@ -18,6 +18,7 @@ class DomainSocketServer : public UnixDomainSocket {
   void seeking(std::string str) const;
   bool checker(std::string key, std::vector<std::string> str) const;
   void bufferWriter(int start, int end, std::string str, char ch[]) const;
+  void sanitizer(std::string str) const;
   void RunServer() const {
     int sock_fd;  // unnamed socket file descriptor
     int client_req_sock_fd;  // client connect request socket file descriptor
@@ -101,7 +102,7 @@ class DomainSocketServer : public UnixDomainSocket {
         }
         bytes_read = read(client_req_sock_fd, read_buffer, kRead_buffer_size);
       }
-      std::cout << search_string << std::endl;
+      std::cout << search_string.size() << std::endl;
       if (bytes_read == 0) {
         std::cout << "Client disconnected" << std::endl;
         
@@ -127,7 +128,7 @@ class DomainSocketServer : public UnixDomainSocket {
       // Reults of the search
       std::vector<std::string> out = fileParser(search_s[0]);
       // fileOutput = searcher(search_s, out);
-        std::cout << kEoT << std::endl;
+      std::cout << kEoT << std::endl;
       int outSize = fileOutput.size();
       int ep = kWrite_buffer_size;
       int sp = 0;

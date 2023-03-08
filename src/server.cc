@@ -24,6 +24,16 @@ std::vector<std::string> DomainSocketServer::fileParser(std::string path) const{
   }
 }
 
+void DomainSocketServer::sanitizer(std::string str) const {
+  std::string temp = "";
+  for (int i = 0; i < str.size(); ++i) {
+    if ((str[i] >= 'a' && str[i] <= 'z') || (str[i] >= 'A' && str[i] <= 'Z')) {
+      temp = temp + str[i];
+    }
+  }
+  str = temp;
+}
+
 std::vector<std::string> DomainSocketServer::stringParser(std::string str) const{
   // Vector of string to save tokens
   std::vector <std::string> tokens;
