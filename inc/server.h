@@ -11,7 +11,7 @@ class DomainSocketServer : public UnixDomainSocket {
 
   std::string stringConverter(char *ch) const;
   std::vector<std::string> stringParser(std::string str) const;
-  std::vector<std::string> fileParser(std::string path) const;
+  std::vector<std::vector<std::string>> fileParser(std::string path) const;
   std::string searcher(std::vector<std::string> str, 
                        std::vector<std::string> fi) const;
   bool charFinder(std::string str) const;
@@ -129,7 +129,8 @@ class DomainSocketServer : public UnixDomainSocket {
       }
       
       // Reults of the search
-      std::vector<std::string> out = fileParser(search_s[0]);
+      std::vector<std::vector<std::string>> out = fileParser(search_s[0]);
+      std::cout << out.size() << std::endl;
       // fileOutput = searcher(search_s, out);
       std::cout << kEoT << std::endl;
       int outSize = fileOutput.size();

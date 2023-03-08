@@ -1,26 +1,21 @@
 // Copyright 2023 Jackie Wang
 #include <proj2/inc/server.h>
-std::vector<std::string> DomainSocketServer::fileParser(std::string path) const{
-  std::vector<std::string> str;
+std::vector<std::vector<std::string>> DomainSocketServer::fileParser(std::string path) const{
+  std::vector<std::vecotr<std::string>> str;
+  std::vector<std::string> fields;
   std::ifstream new_file (path);
   if (new_file.is_open()) { 
-    std::string line;
-    std::cout << path << std::endl;
-    // Read data from the file object and put it into a string.
-    while (getline(new_file, line)) { 
+    while (std::getline(file, line)) {
       std::istringstream ss(line);
-      // Print the data of the string.
-      std::cout << line << std::endl;
-      str.push_back(line);
-
+      std::string field;
+      while (std::getline(ss, field, ',')) {
+        fields.push_back(field);
+      }
+      str.push_back(fields);
     }
-    std::cout << "working" << std::endl;
-    
-    // Close the file object.
-    new_file.close();
-    return str; 
   } else {
-    str.push_back("INVALID FILE\n");
+    fields.push_back("INVALID FILE\n");
+    str.push_back(fields);
     return str;
   }
 }
