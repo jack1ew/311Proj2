@@ -74,7 +74,7 @@ class DomainSocketClient : public UnixDomainSocket {
         t = write(socket_fd, write_buffer, kWrite_buffer_size);
         bytes_wrote += t;
       }*/
-      write_buffer = chunks[0];
+      strcpy(write_buffer, chunks[0].c_str());
       t = write(socket_fd, write_buffer, kWrite_buffer_size);
       bytes_wrote += t;
       for (int i = 1; i < chunks.size(); i++) {
@@ -100,7 +100,7 @@ class DomainSocketClient : public UnixDomainSocket {
           t = write(socket_fd, write_buffer, kWrite_buffer_size);
           bytes_wrote += t;
         }*/
-        write_buffer = chunks[i];
+        strcpy(write_buffer, chunks[i].c_str());
         t = write(socket_fd, write_buffer, kWrite_buffer_size);
         bytes_wrote += t;
         std::cout << t << std::endl;
