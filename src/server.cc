@@ -11,7 +11,7 @@ std::vector<std::string> DomainSocketServer::fileParser(std::string path) const{
       std::istringstream ss(line);
       // Print the data of the string.
       std::cout << line << std::endl;
-      str.push_back(sa);
+      str.push_back(line);
 
     }
     std::cout << "working" << std::endl;
