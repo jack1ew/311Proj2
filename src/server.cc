@@ -4,7 +4,7 @@ std::vector<std::vector<std::string>> DomainSocketServer::fileParser(std::string
   std::vector<std::vector<std::string>> str;
   std::vector<std::string> fields;
   std::string line;
-  std::ifstream new_file ("proj2/dat/bankloan1.csv");
+  std::ifstream new_file ("dat/bankloan1.csv");
   if (new_file.is_open()) { 
     while (std::getline(new_file, line)) {
       std::istringstream ss(line);
