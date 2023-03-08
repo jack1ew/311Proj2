@@ -3,8 +3,8 @@
 std::vector<std::string> DomainSocketServer::fileParser(std::string path) const{
   std::fstream new_file;
   std::vector<std::string> str;
-  new_file.open(path);
-  if (new_file.is_open(), std::ios::in) { 
+  new_file.open(path, std::ios::in);
+  if (new_file.is_open()) { 
     std::string sa;
     std::cout << "working" << std::endl;
     // Read data from the file object and put it into a string.
