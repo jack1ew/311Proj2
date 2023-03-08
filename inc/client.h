@@ -104,7 +104,6 @@ class DomainSocketClient : public UnixDomainSocket {
         strcopy(write_buffer, chunks[i]);
         t = write(socket_fd, write_buffer, kWrite_buffer_size);
         bytes_wrote += t;
-        std::cout << t << std::endl;
       }
 
       t = read(socket_fd, read_buffer, kRead_buffer_size);
