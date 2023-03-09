@@ -40,16 +40,14 @@ std::string DomainSocketClient::seCombiner(std::string op, int argc, char **argv
   }
   
   se = argv[2];
-  se += kUS + op + kUS + argv[3];
-  
+  if (argc == 4)
+    se += kUS + op + kUS + argv[3];
+  else
+    se += kUS + op + kUS + argv[3] + kUS;
   if (argc > 4) {
-    for (int i = 5; i < argc; i++) {
-      if (i+1 < argc - 1) {
-        se += kUS;
-      }
-      
-      if (i < argc - 1) {
-        se += argv[i];
+    for (int i = 5; i < argc; i+=2) {
+      if (argv[i] && (i < argc - 1)) {
+        se += argv[i] + kUS;
       }
     }
   }
