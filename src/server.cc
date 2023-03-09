@@ -71,7 +71,7 @@ std::string DomainSocketServer::stringConverter(char *ch) const{
   return str;
 }
 
-std::string DomainSocketServer::stringCombiner(std::vector<std::string> str) {
+std::string DomainSocketServer::stringCombiner(std::vector<std::string> str) const{
   std::string result = "";
   int n = str.size();
   for (int i = 0; i < n; i++) {
