@@ -11,7 +11,7 @@ class DomainSocketServer : public UnixDomainSocket {
 
   std::string stringConverter(char *ch) const;
   std::vector<std::string> stringParser(std::string str) const;
-  std::vector<std::string> fileParser(std::string path) const;
+  std::vector<std::vector<std::string>> fileParser(std::string path) const;
   std::string searcher(std::vector<std::string> str, 
                        std::vector<std::string> fi) const;
   bool charFinder(std::string str) const;
@@ -132,7 +132,7 @@ class DomainSocketServer : public UnixDomainSocket {
       }
       
       // Reults of the search
-      std::vector<std::string> out = fileParser(search_s[0]);
+      std::vector<std::vector<std::string>> out = fileParser(search_s[0]);
       std::cout << search_s[2] << std::endl;
       fileOutput = searcher(search_s, out);
       int outSize = fileOutput.size();
@@ -174,7 +174,7 @@ class DomainSocketServer : public UnixDomainSocket {
         }
       }
       std::clog << "BYTES SENT: " << bytes_wrote << "\n";
-      if (out[0] == "INVALID FILE\n")
+      if (out[0][0] == "INVALID FILE\n")
         close(client_req_sock_fd);
      */ 
     }
