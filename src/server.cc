@@ -96,7 +96,7 @@ std::string DomainSocketServer::searcher(std::vector<std::string> str, std::vect
     for (int i = 0; i < fi.size(); i++) {
       for (int j = 2; i < str.size(); i++) {
         if(fi[j].find(str[j]) != std::string::npos) {
-          continue
+          continue;
         } else {
           b = false;
         }
