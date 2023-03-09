@@ -30,23 +30,24 @@ std::string DomainSocketClient::operationFinder(int argc, char **argv) {
   }
 }
 
-std::string DomainSocketClient::seCombiner(std::string op, int argc, char **argv) {
+std::string DomainSocketClient::seCombiner(std::string op, int argc, std::vector<std::string> args) {
   const char kUS = static_cast<char>(31);
   const char kEoT = static_cast<char>(3);
   std::string se;
-  
+
+  // Check for minimum number of arguments
   if (argc < 4) {
-    return "";
+    throw std::runtime_error("Not enough arguments");
   }
-  
+
   // Concatenate the first three arguments
-  se = argv[2];
-  se += kUS + op + kUS + argv[3];
+  se = args[2];
+  se += kUS + op + kUS + args[3];
 
   // Concatenate remaining arguments
   for (int i = 5; i < argc; i += 2) {
     if (i < argc - 1) {
-      se += kUS + argv[i];
+      se += kUS + args[i];
     }
   }
 
@@ -55,6 +56,7 @@ std::string DomainSocketClient::seCombiner(std::string op, int argc, char **argv
 
   return se;
 }
+
 void DomainSocketClient::bufferWriter(int start, int end, std::string str, char ch[]) {
   int j = 0;
   for (int i = start; i < end; i++) {

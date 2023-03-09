@@ -10,14 +10,17 @@ class DomainSocketClient : public UnixDomainSocket {
  public:
 
   using UnixDomainSocket::UnixDomainSocket;
-  std::string operationFinder(int argc, char **argv);
-  std::string seCombiner(std::string op, int argc, char **argv);
+  std::string operationFinder(int argc, std::vector<std::string> argv);
+  std::string seCombiner(std::string op, int argc, std::vector<std::string> args);
   void bufferWriter(int sp, int ep, std::string str, char ch[]);
   std::vector<std::string> splitString(std::string str, int chunkSize);
   void strcopy(char ch[], std::string str);
   void RunClient(int argc, char **argv) {
     // (1) open nameless Unix socket
-    
+    std::vector<std::string> args;
+    for (int i = 0; i < argc; i++) {
+      args.push_back(argv[i]);
+    }
     int socket_fd = socket(AF_UNIX, SOCK_STREAM, 0);
     std::string op;
     if (socket_fd < 0) {
@@ -32,8 +35,8 @@ class DomainSocketClient : public UnixDomainSocket {
       std::cerr << "Nothing to search for" << std::endl;
       exit(2);
     }
-    op = operationFinder(argc, argv);
-    std::string se = seCombiner(op, argc, argv);
+    op = operationFinder(argc, args);
+    std::string se = seCombiner(op, argc, args);
     std::cout << se << std::endl;
     if(op == "MIXED") {
       std::cerr << "Mixed boolean operations not presently supported" << std::endl;
