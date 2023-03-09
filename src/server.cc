@@ -97,6 +97,14 @@ bool DomainSocketServer::checker(std::string key, std::vector<std::string> str) 
   }
 }
 
+bool DomainSocketServer::finder(std::vector<std::string> vec, std::string str) {
+  for (int i = 0; i < vec.size(); i++) {
+    if (str == vec[i])
+    return true;
+  }
+  return false
+}
+
 std::string DomainSocketServer::searcher(std::vector<std::string> str, std::vector<std::vector<std::string>> fi) const{
   std::string results = "";
   std::string temp = "";
@@ -106,7 +114,7 @@ std::string DomainSocketServer::searcher(std::vector<std::string> str, std::vect
   if (str[1] == "+" || str[1] == "n/a") {
     for (int i = 2; i < str.size(); i++) {
       for (int j = 0; j < fi.size(); j++) {
-        if (std::find(fi[j].begin(), fi[j].end(), str[i]) != fi[j].end()) {
+        if (finder(str[i], fi[j])) {
           temp = stringCombiner(fi[j]);
           if (results.find(temp) != std::string::npos) {
             n = std::to_string(num);
