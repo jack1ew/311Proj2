@@ -81,7 +81,7 @@ std::string DomainSocketServer::searcher(std::vector<std::string> str, std::vect
   bool b = true;
   if (str[1] == "+" || str[1] == "n/a") {
     for (int i = 2; i < str.size(); i++) {
-      for (int j = 0; j < fi.size(); i++) {
+      for (int j = 0; j < fi.size(); j++) {
         if (fi[j].find(str[i]) != std::string::npos) {
           temp = fi[j];
         }
@@ -94,8 +94,8 @@ std::string DomainSocketServer::searcher(std::vector<std::string> str, std::vect
     }
   } else {
     for (int i = 0; i < fi.size(); i++) {
-      for (int j = 2; i < str.size(); i++) {
-        if(fi[j].find(str[j]) != std::string::npos) {
+      for (int j = 2; j < str.size(); j++) {
+        if(fi[i].find(str[j]) != std::string::npos) {
           continue;
         } else {
           b = false;
