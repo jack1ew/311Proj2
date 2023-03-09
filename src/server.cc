@@ -1,10 +1,10 @@
 // Copyright 2023 Jackie Wang
 #include <proj2/inc/server.h>
 std::vector<std::vector<std::string>> DomainSocketServer::fileParser(std::string path) const{
-  std::ifstream file(filename);
+  std::ifstream file(path);
   std::vector<std::vector<std::string>> data;
   std::string line;
-  if (new_file.is_open()) { 
+  if (file.is_open()) {
     while (std::getline(file, line)) {
       std::vector<std::string> fields;
 
