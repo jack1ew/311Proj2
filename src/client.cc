@@ -11,6 +11,7 @@ std::string DomainSocketClient::operationFinder(int argc, char **argv) {
     if (argv[i] == argv[4]) {
       continue;
     } else {
+  std::cout << b << std::endl;
       b = false;
       break;
     }
