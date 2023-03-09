@@ -9,10 +9,10 @@ std::string DomainSocketClient::operationFinder(int argc, std::vector<std::strin
   }
   for (int i = 4; i < argc; i += 2) {
     std::cout << b << std::endl;
-    if (strcmp(argv[i], "+") == 0) {
+    if (argv[i] == "+") {
       // skip to the next iteration of the loop
       continue;
-    } else if (strcmp(argv[i], "x") == 0) {
+    } else if (argv[i] == "x") {
       // skip to the next iteration of the loop
       continue;
     } else {
