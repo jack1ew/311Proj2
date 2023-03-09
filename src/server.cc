@@ -102,7 +102,7 @@ bool DomainSocketServer::finder(std::vector<std::string> vec, std::string str) c
     if (str == vec[i])
     return true;
   }
-  return false
+  return false;
 }
 
 std::string DomainSocketServer::searcher(std::vector<std::string> str, std::vector<std::vector<std::string>> fi) const{
