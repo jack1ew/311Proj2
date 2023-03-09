@@ -74,39 +74,39 @@ bool DomainSocketServer::checker(std::string key, std::vector<std::string> str) 
 }
 
 std::string DomainSocketServer::searcher(std::vector<std::string> str, std::vector<std::string> fi) const{
-  std::string nl = "\n";
   std::string results = "";
   std::string temp = "";
   int num = 1;
-  if (str[1] == "+") {
+  std::string n = "";
+  bool b = true
+  if (str[1] == "+" || str[1] == "n/a") {
     for (int i = 2; i < str.size(); i++) {
-      for (int j = 0; j < fi.size(); j++) {
-        for (int k = 0; k < fi[j].size(); k++) {
-          if (k < fi[j].size() - 1)
-            temp += fi[j][k] + ", ";
-          else
-            temp += fi[j][k];
+      for (int j = 0; j < fi.size(); i++) {
+        if (fi[j].find(str[i]) != std::string::npos) {
+          temp = fi[j];
         }
-        if ((temp.find(str[i]) != std::string::npos) &&
-          (results.find(temp) == std::string::npos)) {
-          results += std::to_string(num) + "\t" + temp + nl;
+        if (results.find(temp) != std::string::npos) {
+          n = std::to_string(num);
+          result += n + "\t" + temp + "\n";
+          num += 1;
         }
-      temp = "";
       }
     }
   } else {
-    for (int j = 0; j < fi.size(); j++) {
-      for (int k = 0; k < fi[j].size(); k++) {
-        if (k < fi[j].size() - 1)
-          temp += fi[j][k] + ", ";
-        else
-          temp += fi[j][k];
+    for (int i = 0; i < fi.size(); i++) {
+      for (int j = 2; i < str.size(); i++) {
+        if(fi[j].find(str[j]) != std::string::npos) {
+          continue
+        } else {
+          b = false;
+        }
       }
-      if (checker(temp, str)) {
-        results += std::to_string(num) + "\t" + temp + nl;
+      if(b) {
+        n = std::to_string(num);
+        temp = fi[i];
+        result += n + "\t" + temp + "\n";
         num += 1;
       }
-      temp = "";
     }
   }
 }
