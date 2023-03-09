@@ -4,27 +4,36 @@
 std::string DomainSocketClient::operationFinder(int argc, char **argv) {
   bool b = true;
   std::string a;
-  if (argc == 4) {
+  
+  if (argc < 5) {
     return "n/a";
   }
-  for (int i = 4; i < argc; i+=2) {
-    std::cout << b << std::endl; 
-    if (argv[i] == "+") {
-      continue; 
-    } else if (argv[i] == "x") {
+  
+  for (int i = 4; i < argc; i += 2) {
+    std::cout << b << std::endl;
+    if (strcmp(argv[i], "+") == 0) {
+      // skip to the next iteration of the loop
+      continue;
+    } else if (strcmp(argv[i], "x") == 0) {
+      // skip to the next iteration of the loop
       continue;
     } else {
       b = false;
       break;
     }
   }
-  a = argv[4];
-  if ((a == "+") && b) {
-    return "+";
-  } else if ((a == "x") && b) {
-    return "x";
+  
+  if (argc >= 5) {
+    a = argv[4];
+    if ((a == "+") && b) {
+      return "+";
+    } else if ((a == "x") && b) {
+      return "x";
+    } else {
+      return "MIXED";
+    }
   } else {
-    return "MIXED";
+    return "n/a";
   }
 }
 
