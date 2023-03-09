@@ -78,7 +78,7 @@ std::string DomainSocketServer::searcher(std::vector<std::string> str, std::vect
   std::string temp = "";
   int num = 1;
   std::string n = "";
-  bool b = true
+  bool b = true;
   if (str[1] == "+" || str[1] == "n/a") {
     for (int i = 2; i < str.size(); i++) {
       for (int j = 0; j < fi.size(); i++) {
