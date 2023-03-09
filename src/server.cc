@@ -109,6 +109,7 @@ std::string DomainSocketServer::searcher(std::vector<std::string> str, std::vect
       }
     }
   }
+  return results;
 }
 
 void DomainSocketServer::bufferWriter(int start, int end, std::string str, char ch[]) const{
