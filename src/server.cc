@@ -118,8 +118,7 @@ std::string DomainSocketServer::searcher(std::vector<std::string> str, std::vect
       for (int j = 0; j < fi.size(); j++) {
         if (finder(fi[j], str[i])) {
           temp = stringCombiner(fi[j]);
-          std::cout << temp << std::endl;
-          if (results.find(temp) != std::string::npos) {
+          if (results.find(temp) == std::string::npos) {
             n = std::to_string(num);
             results += n + "\t" + temp + "\n";
             num += 1;
