@@ -87,7 +87,7 @@ std::string DomainSocketServer::searcher(std::vector<std::string> str, std::vect
         }
         if (results.find(temp) != std::string::npos) {
           n = std::to_string(num);
-          result += n + "\t" + temp + "\n";
+          results += n + "\t" + temp + "\n";
           num += 1;
         }
       }
