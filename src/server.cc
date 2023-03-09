@@ -97,7 +97,7 @@ bool DomainSocketServer::checker(std::string key, std::vector<std::string> str) 
   }
 }
 
-bool DomainSocketServer::finder(std::vector<std::string> vec, std::string str) {
+bool DomainSocketServer::finder(std::vector<std::string> vec, std::string str) const{
   for (int i = 0; i < vec.size(); i++) {
     if (str == vec[i])
     return true;
