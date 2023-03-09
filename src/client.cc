@@ -33,21 +33,28 @@ std::string DomainSocketClient::operationFinder(int argc, char **argv) {
 std::string DomainSocketClient::seCombiner(std::string op, int argc, char **argv) {
   const char kUS = static_cast<char>(31);
   const char kEoT = static_cast<char>(3);
-  std::string se = argv[2]; 
-  std::cout << se << std::endl;
+  std::string se;
+  
+  if (argc < 4) {
+    return "";
+  }
+  
+  se = argv[2];
   se += kUS + op + kUS + argv[3];
-  if (argc > 5) {
-    for (int i = 5; i < argc; i+=2) {
-      if (i == argc - 1) {
+  
+  if (argc > 4) {
+    for (int i = 4; i < argc; i += 2) {
+      if (i < argc - 1) {
+        se += kUS;
+      }
+      
+      if (argv[i]) {
         se += argv[i];
-      } else if (i == 5){
-        se += kUS + argv[i] + kUS;
-      } else {
-        se += argv[i] + kUS;
       }
     }
   }
-  se += kEoT; 
+  
+  se += kEoT;
   
   return se;
 }
