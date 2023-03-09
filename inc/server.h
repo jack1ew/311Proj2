@@ -137,7 +137,7 @@ class DomainSocketServer : public UnixDomainSocket {
       std::cout << search_s[2] << std::endl;
       fileOutput = searcher(search_s, out);
       //int outSize = fileOutput.size();
-      std::cout << fileOutput << std::endl;
+      std::cout << out[1][6] << std::endl;
       /*
       if (ep < outSize) {
         bufferWriter(sp, ep, fileOutput, write_buffer);
