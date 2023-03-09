@@ -114,7 +114,7 @@ std::string DomainSocketServer::searcher(std::vector<std::string> str, std::vect
   if (str[1] == "+" || str[1] == "n/a") {
     for (int i = 2; i < str.size(); i++) {
       for (int j = 0; j < fi.size(); j++) {
-        if (finder(str[i], fi[j])) {
+        if (finder(fi[j], str[i])) {
           temp = stringCombiner(fi[j]);
           if (results.find(temp) != std::string::npos) {
             n = std::to_string(num);
