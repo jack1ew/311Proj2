@@ -125,11 +125,11 @@ class DomainSocketServer : public UnixDomainSocket {
       std::clog << "SEEKING: ";
       for (int i = 2; i < search_s.size(); i++) {
         std::clog << search_s[i];
-        if (i != search_s.size()-1) {
-          std::clog << ", ";
+        if (i == search_s.size()-1) {
+          std::clog << std::endl;
         } else {
           // Attempting to remove the kEoT
-          std::clog << std::endl;
+          std::clog << ", ";
         }
       }
       
