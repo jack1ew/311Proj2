@@ -13,7 +13,7 @@ std::vector<std::vector<std::string>> DomainSocketServer::fileParser(std::string
       std::string field;
       while (std::getline(ss, field, ',')) {
         std::stringstream ss_item(field);
-        while (ss_item >> item >> std::ws) {
+        while (ss_item >> field >> std::ws) {
           fields.push_back(field);
         }
       }
