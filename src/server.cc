@@ -1,6 +1,6 @@
 // Copyright 2023 Jackie Wang
 #include <proj2/inc/server.h>
-std::vector<std::string> DomainSocketServer::fileParser(std::string path) const{
+std::vector<std::vector<std::string>> DomainSocketServer::fileParser(std::string path) const{
   std::ifstream file(filename);
   std::vector<std::vector<std::string>> data;
   std::string line;
