@@ -132,7 +132,7 @@ std::string DomainSocketServer::searcher(std::vector<std::string> str, std::vect
       }
       if(b) {
         n = std::to_string(num);
-        temp = fi[i];
+        temp = stringCombiner(fi[i]);
         results += n + "\t" + temp + "\n";
         num += 1;
       }
