@@ -52,7 +52,7 @@ std::string DomainSocketClient::seCombiner(std::string op, int argc, std::vector
   }
 
   // Add end-of-transmission character
-  se += kEoT;
+  se += kUS + args[argc - 1] + kEoT;
 
   return se;
 }
