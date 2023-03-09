@@ -11,7 +11,7 @@ std::vector<std::vector<std::string>> DomainSocketServer::fileParser(std::string
       std::string field;
       while (std::getline(ss, field, ',')) {
         // remove any white space after the comma
-        field.erase(field.find_last_not_of(" \t\r\n") + 1);
+        field.erase(std::remove_if(field.begin(), field.end(), ::isspace), field.end());
         fields.push_back(field);
       }
       data.push_back(fields);
