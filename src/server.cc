@@ -84,11 +84,12 @@ std::string DomainSocketServer::searcher(std::vector<std::string> str, std::vect
       for (int j = 0; j < fi.size(); j++) {
         if (fi[j].find(str[i]) != std::string::npos) {
           temp = fi[j];
-        }
-        if (results.find(temp) != std::string::npos) {
-          n = std::to_string(num);
-          results += n + "\t" + temp + "\n";
-          num += 1;
+
+          if (results.find(temp) != std::string::npos) {
+            n = std::to_string(num);
+            results += n + "\t" + temp + "\n";
+            num += 1;
+          }
         }
       }
     }
