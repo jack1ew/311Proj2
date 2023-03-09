@@ -9,9 +9,9 @@ std::string DomainSocketClient::operationFinder(int argc, char **argv) {
   }
   for (int i = 4; i < argc - 1; i+=2) {
     if (argv[i] == "+") {
-      continue;
+      b = true;
     } else if (argv[i] == "x") {
-      continue;
+      b = true;
     } else {
       b = false;
       break;
