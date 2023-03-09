@@ -9,7 +9,7 @@ std::string DomainSocketClient::operationFinder(int argc, char **argv) {
   }
   for (int i = 4; i < argc - 1; i+=2) {
     if (argv[i] == argv[4]) {
-      std::cout << argv[6] << std::endl;
+      std::cout << argc << std::endl;
       continue;
     } else {
       b = false;
