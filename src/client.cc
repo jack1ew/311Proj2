@@ -1,7 +1,7 @@
 // Copyright 2023 Jackie Wang
 #include <proj2/inc/client.h>
 
-std::string DomainSocketClient::operationFinder(int argc, char **argv) {
+std::string DomainSocketClient::operationFinder(int argc, std::vector<std::string> args) {
   bool b = true;
   std::string a;
   if (argc < 5) {
