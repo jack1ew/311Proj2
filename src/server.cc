@@ -10,7 +10,7 @@ std::vector<std::vector<std::string>> DomainSocketServer::fileParser(std::string
       std::stringstream ss(line);
       // Split line into fields using comma delimiter
       std::string field;
-      while (std::getline(ss, field, ', ')) {
+      while (std::getline(ss, field, ", ")) {
         std::stringstream ss_item(field);
         fields.push_back(field);
       }
