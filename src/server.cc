@@ -7,17 +7,16 @@ std::vector<std::vector<std::string>> DomainSocketServer::fileParser(std::string
   if (file.is_open()) {
     while (std::getline(file, line)) {
       std::vector<std::string> fields;
-
+      std::stringstream ss(line);
       // Split line into fields using comma delimiter
       size_t pos = 0;
       std::string field;
-      while ((pos = line.find(",")) != std::string::npos) {
-        field = line.substr(0, pos);
-        fields.push_back(field);
-        line.erase(0, pos + 1);
+      while (std::getline(ss, field, ',')) {
+        std::stringstream ss_item(field);
+        while (ss_item >> item >> std::ws) {
+          fields.push_back(field);
+        }
       }
-      fields.push_back(line);
-
       // Add fields to data vector
       data.push_back(fields);
     }
