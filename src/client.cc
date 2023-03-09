@@ -39,21 +39,20 @@ std::string DomainSocketClient::seCombiner(std::string op, int argc, char **argv
     return "";
   }
   
-  se = argv[2];
-  if (argc == 4)
-    se += kUS + op + kUS + argv[3];
-  else
-    se += kUS + op + kUS + argv[3] + kUS;
-  if (argc > 4) {
-    for (int i = 5; i < argc; i+=2) {
-      if (argv[i] && (i < argc - 1)) {
-        se += argv[i] + kUS;
-      }
+  // Concatenate the first three arguments
+  se = args[2];
+  se += kUS + op + kUS + argv[3];
+
+  // Concatenate remaining arguments
+  for (int i = 5; i < argc; i += 2) {
+    if (i < argc - 1) {
+      se += kUS + argv[i];
     }
   }
-  
+
+  // Add end-of-transmission character
   se += kEoT;
-  
+
   return se;
 }
 void DomainSocketClient::bufferWriter(int start, int end, std::string str, char ch[]) {
