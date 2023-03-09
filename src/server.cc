@@ -15,7 +15,7 @@ std::vector<std::vector<std::string>> DomainSocketServer::fileParser(std::string
         std::stringstream ss_item(field);
         while (ss_item >> field >> std::ws) {
           fields.push_back(field);
-          std::cout << executing << std::endl;
+          std::cout << "Executing" << std::endl;
         }
       }
       // Add fields to data vector
