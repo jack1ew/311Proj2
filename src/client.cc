@@ -40,7 +40,7 @@ std::string DomainSocketClient::seCombiner(std::string op, int argc, char **argv
   }
   
   // Concatenate the first three arguments
-  se = args[2];
+  se = argv[2];
   se += kUS + op + kUS + argv[3];
 
   // Concatenate remaining arguments
