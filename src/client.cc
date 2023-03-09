@@ -4,11 +4,9 @@
 std::string DomainSocketClient::operationFinder(int argc, char **argv) {
   bool b = true;
   std::string a;
-  
   if (argc < 5) {
     return "n/a";
   }
-  
   for (int i = 4; i < argc; i += 2) {
     std::cout << b << std::endl;
     if (strcmp(argv[i], "+") == 0) {
@@ -22,18 +20,13 @@ std::string DomainSocketClient::operationFinder(int argc, char **argv) {
       break;
     }
   }
-  
-  if (argc >= 5) {
-    a = argv[4];
-    if ((a == "+") && b) {
-      return "+";
-    } else if ((a == "x") && b) {
-      return "x";
-    } else {
-      return "MIXED";
-    }
+  a = argv[4];
+  if ((a == "+") && b) {
+    return "+";
+  } else if ((a == "x") && b) {
+    return "x";
   } else {
-    return "n/a";
+    return "MIXED";
   }
 }
 
