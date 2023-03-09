@@ -8,16 +8,15 @@ std::string DomainSocketClient::operationFinder(int argc, char **argv) {
     return "n/a";
   }
   for (int i = 4; i < argc - 1; i+=2) {
+    std::cout << argv[i] << std::endl; 
     if (argv[i] == argv[4]) {
       continue;
     } else {
-  std::cout << b << std::endl;
       b = false;
       break;
     }
   }
   a = argv[4];
-  std::cout << b << std::endl;
   if ((a == "+") && b) {
     return "+";
   } else if ((a == "x") && b) {
