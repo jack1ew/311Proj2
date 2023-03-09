@@ -7,6 +7,7 @@ std::vector<std::string> DomainSocketServer::fileParser(std::string path) const{
   if (new_file.is_open()) { 
     while (std::getline(new_file, line)) {
       str.push_back(line);
+      std::cout << line << std::endl;
     }
   } else {
     str.push_back("INVALID FILE\n");
