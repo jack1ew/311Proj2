@@ -141,6 +141,7 @@ std::string DomainSocketServer::searcher(std::vector<std::string> str, std::vect
         temp = stringCombiner(fi[i]);
         results += n + "\t" + temp + "\n";
         num += 1;
+        check = 0;
       }
     }
   }
