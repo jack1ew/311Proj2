@@ -99,7 +99,7 @@ bool DomainSocketServer::checker(std::string key, std::vector<std::string> str) 
 
 bool DomainSocketServer::finder(std::vector<std::string> vec, std::string str) const{
   for (int i = 0; i < vec.size(); i++) {
-    if (str == vec[i]) {
+    if (str.compare(vec[i]) == 0) {
       return true;
     }
     
@@ -112,8 +112,9 @@ std::string DomainSocketServer::searcher(std::vector<std::string> str, std::vect
   std::string temp = "";
   int num = 1;
   std::string n = "";
+  int check = 0;
   bool b = true;
-  if (str[1] == "+" || str[1] == "n/a") {
+  if ((str[1].compare("+") == 0) || (str[1].compare("n/a") == 0)) {
     for (int i = 2; i < str.size(); i++) {
       for (int j = 0; j < fi.size(); j++) {
         if (finder(fi[j], str[i])) {
@@ -126,16 +127,16 @@ std::string DomainSocketServer::searcher(std::vector<std::string> str, std::vect
         }
       }
     }
-  } else {
+  } else if(str[1].compare("x") == 0){
     for (int i = 0; i < fi.size(); i++) {
-      for (int j = 2; j < str.size(); j++) {
-        if (std::find(fi[i].begin(), fi[i].end(), str[j]) != fi[i].end()) {
-          continue;
-        } else {
-          b = false;
+      for (int j = 0; j < fi[i].size(); j++) {
+        for (int k = 2; k < str.size(); k++) {
+          if (str[k].compare(fi[i][j]) == 0) {
+            check += 1;
+          }
         }
       }
-      if(b) {
+      if(check == (str.size() - 2)) {
         n = std::to_string(num);
         temp = stringCombiner(fi[i]);
         results += n + "\t" + temp + "\n";
