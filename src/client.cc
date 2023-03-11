@@ -42,10 +42,10 @@ std::string DomainSocketClient::seCombiner(std::string op, int argc, std::vector
 
   // Concatenate the first three arguments
   se = args[2];
-  se += kUS + op + kUS + args[3];
+  se += kUS + op;
 
   // Concatenate remaining arguments
-  for (int i = 5; i < argc; i += 2) {
+  for (int i = 3; i < argc; i += 2) {
     if (i < argc - 1) {
       se += kUS + args[i];
     }
