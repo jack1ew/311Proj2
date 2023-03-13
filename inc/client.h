@@ -56,7 +56,7 @@ class DomainSocketClient : public UnixDomainSocket {
     std::clog << "SERVER CONNECTION ACCEPTED" << std::endl;
 
     // (3) write to socket
-    const size_t kRead_buffer_size = 10;  // read 4 byte increaments
+    const size_t kRead_buffer_size = 1;  // read 4 byte increaments
     char read_buffer[kRead_buffer_size];
     int bytes_read = 0;
     int bytes_wrote = 0;
@@ -114,6 +114,7 @@ class DomainSocketClient : public UnixDomainSocket {
       t = read(socket_fd, read_buffer, kRead_buffer_size);
       std::string results = ""; 
       const char kKill_msg[] = "quit";
+      std::ostringstream oss;
       while (t > 0) {
         if (strcmp(read_buffer, kKill_msg) == 0) {
           std::cout << "Server shutting down..." << std::endl;
@@ -121,14 +122,12 @@ class DomainSocketClient : public UnixDomainSocket {
           bytes_read = 0;  // message handled, disconnect client
           exit(0);
         }
-        std::ostringstream oss;
+        if (read_buffer[0] == kEoT) {
+          break;
+        }
         oss.write(read_buffer, bytes_read);
         std::string output = oss.str();
         results += output;
-        if((results.find(kEoT) != std::string::npos)) {
-          results.erase(std::remove(results.begin(), results.end(), kEoT), results.end());
-          break;
-        }
         t = read(socket_fd, read_buffer, kRead_buffer_size);
         bytes_read += t;
       }
