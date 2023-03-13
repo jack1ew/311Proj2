@@ -141,6 +141,7 @@ class DomainSocketServer : public UnixDomainSocket {
       fileOutput = searcher(search_s, out);
       std::vector<std::string> chunks = splitString(fileOutput, kWrite_buffer_size);
       strcopy(write_buffer, chunks[0]);
+      std::cout << chunks[0];
       t = write(client_req_sock_fd, write_buffer, kWrite_buffer_size);
       bytes_wrote += t;
       for (int i = 1; i < chunks.size(); i++) {
@@ -166,6 +167,7 @@ class DomainSocketServer : public UnixDomainSocket {
           t = write(socket_fd, write_buffer, kWrite_buffer_size);
           bytes_wrote += t;
         }*/
+        std::cout << chunks[i];
         strcopy(write_buffer, chunks[i]);
         t = write(client_req_sock_fd, write_buffer, kWrite_buffer_size);
         bytes_wrote += t;
