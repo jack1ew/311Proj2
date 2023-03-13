@@ -171,7 +171,7 @@ std::vector<std::string> DomainSocketServer::splitString(std::string str, int ch
 }
 
 void DomainSocketServer::strcopy(char ch[], std::string str) const{
-  for(int i = 0; i < 10; i++) {
+  for(int i = 0; i < 1; i++) {
     ch[i] = str[i];
   }
 }
