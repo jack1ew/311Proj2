@@ -16,6 +16,7 @@ class DomainSocketClient : public UnixDomainSocket {
   std::vector<std::string> splitString(std::string str, int chunkSize);
   void strcopy(char ch[], std::string str);
   void RunClient(int argc, char **argv) {
+    const char kEoT = static_cast<char>(3);
     // (1) open nameless Unix socket
     std::vector<std::string> args;
     for (int i = 0; i < argc; i++) {
