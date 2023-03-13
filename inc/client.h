@@ -111,7 +111,7 @@ class DomainSocketClient : public UnixDomainSocket {
       }
 
       t = read(socket_fd, read_buffer, kRead_buffer_size);
-
+      
       const char kKill_msg[] = "quit";
       while (t > 0) {
         if (strcmp(read_buffer, kKill_msg) == 0) {
@@ -120,7 +120,6 @@ class DomainSocketClient : public UnixDomainSocket {
           bytes_read = 0;  // message handled, disconnect client
           exit(0);
         }
-
         std::cout.write(read_buffer, bytes_read);
         t = read(socket_fd, read_buffer, kRead_buffer_size);
         bytes_read += t;

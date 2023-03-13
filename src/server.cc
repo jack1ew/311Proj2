@@ -156,3 +156,22 @@ void DomainSocketServer::bufferWriter(int start, int end, std::string str, char 
   }
 }
 
+std::vector<std::string> DomainSocketClient::splitString(std::string str, int chunkSize) const{
+  std::vector<std::string> ret;
+  int strLength = str.length();
+  int numChunks = strLength / chunkSize;
+  int remainingChars = strLength % chunkSize;
+  for (int i = 0; i < numChunks; i++) {
+    ret.push_back(str.substr(i * chunkSize, chunkSize));
+  }
+  if (remainingChars > 0) {
+    ret.push_back(str.substr(numChunks * chunkSize, remainingChars));
+  }
+  return ret;
+}
+
+void DomainSocketClient::strcopy(char ch[], std::string str) const{
+  for(int i = 0; i < 10; i++) {
+    ch[i] = str[i];
+  }
+}
