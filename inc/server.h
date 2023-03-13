@@ -174,7 +174,7 @@ class DomainSocketServer : public UnixDomainSocket {
       }
       write_buffer[0] = kEoT;
       t = write(client_req_sock_fd, write_buffer, kWrite_buffer_size);
-      bytes_wrote[0] = kEoT;
+      bytes_wrote += t;
       std::clog << "BYTES SENT: " << bytes_wrote << std::endl;
       /*
       if (ep < outSize) {
