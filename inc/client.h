@@ -120,10 +120,18 @@ class DomainSocketClient : public UnixDomainSocket {
           bytes_read = 0;  // message handled, disconnect client
           exit(0);
         }
-        std::cout.write(read_buffer, bytes_read);
+        std::ostringstream oss;
+        oss.write(read_buffer, bytes_read);
+        std::string output = oss.str();
+        results += output;
+        if((results.find(kEoT) != std::string::npos)) {
+          results.erase(std::remove(results.begin(), results.end(), kEoT), results.end());
+          break;
+        }
         t = read(socket_fd, read_buffer, kRead_buffer_size);
         bytes_read += t;
       }
+      std::cout << results << std::endl;
       std::clog << "BYTES RECEIVED: " << bytes_read << std::endl;
       bytes_read = 0;
       if (t == 0) {
