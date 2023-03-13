@@ -124,7 +124,12 @@ class DomainSocketServer : public UnixDomainSocket {
       search_s = stringParser(search_string);
       search_string = "";
       std::clog << "PATH: " << search_s[0] << std::endl;
-      std::clog << "OPERATION: " << search_s[1] << std::endl;
+      if (search_s[0] == "+")
+        std::clog << "OPERATION: " << "OR" << std::endl;
+      else if (search_s[0] == "x")
+        std::clog << "OPERATION: " << "AND" << std::endl;
+      else
+        std::clog << "OPERATION: " << "n/a" << std::endl;
       std::clog << "SEEKING: ";
       for (int i = 2; i < search_s.size(); i++) {
         std::clog << search_s[i];
