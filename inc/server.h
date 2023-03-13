@@ -167,10 +167,11 @@ class DomainSocketServer : public UnixDomainSocket {
           t = write(socket_fd, write_buffer, kWrite_buffer_size);
           bytes_wrote += t;
         }*/
-        std::cout << chunks[i];
         strcopy(write_buffer, chunks[i]);
+        std::cout << write_buffer[0];
         t = write(client_req_sock_fd, write_buffer, kWrite_buffer_size);
         bytes_wrote += t;
+
       }
       write_buffer[0] = kEoT;
       t = write(client_req_sock_fd, write_buffer, kWrite_buffer_size);
