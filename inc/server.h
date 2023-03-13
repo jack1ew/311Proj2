@@ -122,6 +122,7 @@ class DomainSocketServer : public UnixDomainSocket {
       // Prints path, operation, and seeking
       //std::cout << search_s[2] << std::endl;
       search_s = stringParser(search_string);
+      search_string = "";
       std::clog << "PATH: " << search_s[0] << std::endl;
       std::clog << "OPERATION: " << search_s[1] << std::endl;
       std::clog << "SEEKING: ";
