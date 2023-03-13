@@ -128,10 +128,10 @@ class DomainSocketClient : public UnixDomainSocket {
         oss.write(read_buffer, bytes_read);
         std::string output = oss.str();
         results += output;
+        std::cout << read_buffer[0];
         t = read(socket_fd, read_buffer, kRead_buffer_size);
         bytes_read += t;
       }
-      std::cout << results << std::endl;
       std::clog << "BYTES RECEIVED: " << bytes_read << std::endl;
       bytes_read = 0;
       if (t == 0) {
