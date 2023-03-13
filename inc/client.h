@@ -129,6 +129,7 @@ class DomainSocketClient : public UnixDomainSocket {
       }
       std::cout << results << std::endl;
       std::clog << "BYTES RECEIVED: " << bytes_read << std::endl;
+      bytes_read = 0;
       if (t == 0) {
         std::cout << "Server disconnected" << std::endl;
 
