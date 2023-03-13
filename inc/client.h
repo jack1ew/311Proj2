@@ -39,7 +39,6 @@ class DomainSocketClient : public UnixDomainSocket {
       exit(2);
     }
     op = operationFinder(argc, args);
-    std::string se = seCombiner(op, argc, args);
     if(op == "MIXED") {
       std::cerr << "Mixed boolean operations not presently supported" << std::endl;
       exit(2);
