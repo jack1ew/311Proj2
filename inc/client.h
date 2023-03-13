@@ -69,17 +69,6 @@ class DomainSocketClient : public UnixDomainSocket {
     std::vector<std::string> chunks;
     chunks = splitString(se, kWrite_buffer_size);
     while (true) {
-      /*if((ep < seSize) && !checker(write_buffer)) {
-        bufferWriter(sp, ep , se, write_buffer);
-        ep += kWrite_buffer_size;
-        sp += kWrite_buffer_size;
-        t = write(socket_fd, write_buffer, kWrite_buffer_size);
-        bytes_wrote += t;
-      } else {
-        bufferWriter(sp, seSize, se, write_buffer);
-        t = write(socket_fd, write_buffer, kWrite_buffer_size);
-        bytes_wrote += t;
-      }*/
       strcopy(write_buffer, chunks[0]);
       t = write(socket_fd, write_buffer, kWrite_buffer_size);
       bytes_wrote += t;
@@ -94,18 +83,6 @@ class DomainSocketClient : public UnixDomainSocket {
           std::clog << "Server dropped connection!" << std::endl;
           exit(-2);
         }
-        /*
-        if(ep < seSize && !checker(write_buffer)) {
-          bufferWriter(sp, ep , se, write_buffer);
-          ep += kWrite_buffer_size;
-          sp += kWrite_buffer_size;
-          t = write(socket_fd, write_buffer, kWrite_buffer_size);
-          bytes_wrote += t;
-        } else {
-          bufferWriter(sp, seSize, se, write_buffer);
-          t = write(socket_fd, write_buffer, kWrite_buffer_size);
-          bytes_wrote += t;
-        }*/
         strcopy(write_buffer, chunks[i]);
         t = write(socket_fd, write_buffer, kWrite_buffer_size);
         bytes_wrote += t;
@@ -143,7 +120,9 @@ class DomainSocketClient : public UnixDomainSocket {
 
         exit(-1);
       }
+      break;
     }
+
   }
 };
 

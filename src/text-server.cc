@@ -4,4 +4,5 @@
 int main(int argc, char** argv) {
   DomainSocketServer dss(argv[1]);
   dss.RunServer();
+  return 0;
 }
