@@ -22,7 +22,7 @@ class DomainSocketServer : public UnixDomainSocket {
   std::string stringCombiner(std::vector<std::string> str) const;
   bool finder(std::vector<std::string> vec, std::string str) const;
   std::vector<std::string> splitString(std::string str, int chunkSize) const;
-  void DomainSocketClient::strcopy(char ch[], std::string str) const;
+  void strcopy(char ch[], std::string str) const;
   void RunServer() const {
     int sock_fd;  // unnamed socket file descriptor
     int client_req_sock_fd;  // client connect request socket file descriptor
