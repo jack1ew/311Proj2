@@ -10,7 +10,7 @@ std::string DomainSocketClient::operationFinder(int argc, std::vector<std::strin
   }
   for (int i = 4; i < argc; i += 2) {
     if (argv[i] == "+" || argv[i] == "x") {
-      b += 1
+      b += 1;
     }
   }
   a = argv[4];
