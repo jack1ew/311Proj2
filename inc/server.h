@@ -76,6 +76,7 @@ class DomainSocketServer : public UnixDomainSocket {
     std::string file_name = "";
     std::vector<std::string> search_s;
     std::string fileOutput;
+    int t = 0;
     while (true) {
       // (4) Accept connection from a client
       client_req_sock_fd = accept(sock_fd, nullptr, nullptr);
