@@ -10,6 +10,8 @@ class DomainSocketClient : public UnixDomainSocket {
  public:
 
   using UnixDomainSocket::UnixDomainSocket;
+
+  // README.md for function description
   std::string operationFinder(int argc, std::vector<std::string> argv);
   std::string seCombiner(std::string op, int argc, std::vector<std::string> args);
   void bufferWriter(int sp, int ep, std::string str, char ch[]);
@@ -44,6 +46,7 @@ class DomainSocketClient : public UnixDomainSocket {
       std::cerr << "Mixed boolean operations not presently supported" << std::endl;
       exit(2);
     }
+
     // (2) connect to an existing socket
     int success = connect(socket_fd,
                           // sockaddr_un is a Unix sockaddr
@@ -88,10 +91,10 @@ class DomainSocketClient : public UnixDomainSocket {
         bytes_wrote += t;
       }
 
+      // Reads from the socket
       t = read(socket_fd, read_buffer, kRead_buffer_size);
       std::string results = ""; 
       const char kKill_msg[] = "quit";
-      std::ostringstream oss;
       while (t > 0) {
         if (strcmp(read_buffer, kKill_msg) == 0) {
           std::cout << "Server shutting down..." << std::endl;
@@ -102,15 +105,11 @@ class DomainSocketClient : public UnixDomainSocket {
         if (read_buffer[0] == kEoT) {
           break;
         }
-        oss.write(read_buffer, bytes_read);
-        std::string output = oss.str();
-        results += output;
         std::cout << read_buffer[0];
         t = read(socket_fd, read_buffer, kRead_buffer_size);
         bytes_read += t;
       }
       std::clog << "BYTES RECEIVED: " << bytes_read << std::endl;
-      bytes_read = 0;
       if (t == 0) {
         std::cout << "Server disconnected" << std::endl;
 

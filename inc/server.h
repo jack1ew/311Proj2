@@ -9,6 +9,7 @@ class DomainSocketServer : public UnixDomainSocket {
   const char kEoT = static_cast<char>(3);
   const char kUS = static_cast<char>(31);
 
+  // README.md for function description
   std::string stringConverter(char *ch) const;
   std::vector<std::string> stringParser(std::string str) const;
   std::vector<std::vector<std::string>> fileParser(std::string path) const;
@@ -101,8 +102,10 @@ class DomainSocketServer : public UnixDomainSocket {
         oss.write(read_buffer, bytes_read);
         std::string output = oss.str();
 
-        // Combines the bytes read into a string and stops 
+        // Combines the bytes read into a string and stops when kEoT is found
         search_string += output;
+
+        // Breaks when kEoT is found
         if((search_string.find(kEoT) != std::string::npos)) {
           search_string.erase(std::remove(search_string.begin(), search_string.end(), kEoT), search_string.end());
           break;
@@ -118,9 +121,8 @@ class DomainSocketServer : public UnixDomainSocket {
         std::cerr << strerror(errno) << std::endl;
         exit(-1);
       }
-      
+
       // Prints path, operation, and seeking
-      //std::cout << search_s[2] << std::endl;
       search_s = stringParser(search_string);
       search_string = "";
       std::clog << "PATH: " << search_s[0] << std::endl;
@@ -136,19 +138,20 @@ class DomainSocketServer : public UnixDomainSocket {
         if (i == search_s.size()-1) {
           std::clog << std::endl;
         } else {
-          // Attempting to remove the kEoT
           std::clog << ", ";
         }
       }
-      
-      // Reults of the search
+
+      // Perform the search
       std::vector<std::vector<std::string>> out = fileParser(search_s[0]);
       fileOutput = searcher(search_s, out);
       std::vector<std::string> chunks = splitString(fileOutput, kWrite_buffer_size);
       strcopy(write_buffer, chunks[0]);
-      std::cout << chunks[0];
+
+      // Writes the results to the socket 
       t = write(client_req_sock_fd, write_buffer, kWrite_buffer_size);
       bytes_wrote += t;
+
       for (int i = 1; i < chunks.size(); i++) {
         if (t < 0) {
           std::cerr << strerror(errno) << std::endl;
@@ -160,20 +163,7 @@ class DomainSocketServer : public UnixDomainSocket {
           std::clog << "Server dropped connection!" << std::endl;
           exit(-2);
         }
-        /*
-        if(ep < seSize && !checker(write_buffer)) {
-          bufferWriter(sp, ep , se, write_buffer);
-          ep += kWrite_buffer_size;
-          sp += kWrite_buffer_size;
-          t = write(socket_fd, write_buffer, kWrite_buffer_size);
-          bytes_wrote += t;
-        } else {
-          bufferWriter(sp, seSize, se, write_buffer);
-          t = write(socket_fd, write_buffer, kWrite_buffer_size);
-          bytes_wrote += t;
-        }*/
         strcopy(write_buffer, chunks[i]);
-        std::cout << write_buffer[0];
         t = write(client_req_sock_fd, write_buffer, kWrite_buffer_size);
         bytes_wrote += t;
 
@@ -182,46 +172,6 @@ class DomainSocketServer : public UnixDomainSocket {
       t = write(client_req_sock_fd, write_buffer, kWrite_buffer_size);
       bytes_wrote += t;
       std::clog << "BYTES SENT: " << bytes_wrote << std::endl;
-      /*
-      if (ep < outSize) {
-        bufferWriter(sp, ep, fileOutput, write_buffer);
-        ep += kWrite_buffer_size;
-        sp += kWrite_buffer_size;
-        t = write(client_req_sock_fd, write_buffer, kWrite_buffer_size);
-        bytes_wrote += t;
-      } else {
-        bufferWriter(sp, outSize, fileOutput, write_buffer);
-        sp += outSize - sp;
-        t = write(client_req_sock_fd, write_buffer, kWrite_buffer_size);
-        bytes_wrote += t;
-      }
-      while(t > 0) {
-        if (bytes_wrote == 0) {
-          std::clog << "Nothing Wrote" << std::endl;
-          exit(-2);
-        }
-        if (bytes_wrote < 0) {
-          std::cerr << strerror(errno) << std::endl;
-          exit(-1);
-        }
-        
-        if (ep < outSize) {
-          bufferWriter(sp, ep, fileOutput, write_buffer);
-          ep += kWrite_buffer_size;
-          sp += kWrite_buffer_size;
-          t = write(client_req_sock_fd, write_buffer, kWrite_buffer_size);
-          bytes_wrote += t;
-        } else {
-          bufferWriter(sp, outSize, fileOutput, write_buffer);
-          sp += outSize - sp;
-          t = write(client_req_sock_fd, write_buffer, kWrite_buffer_size);
-          bytes_wrote += t;
-        }
-      }
-      std::clog << "BYTES SENT: " << bytes_wrote << "\n";
-      if (out[0][0] == "INVALID FILE\n")
-        close(client_req_sock_fd);
-     */ 
     }
   }
 };
