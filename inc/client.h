@@ -40,12 +40,11 @@ class DomainSocketClient : public UnixDomainSocket {
     }
     op = operationFinder(argc, args);
     std::string se = seCombiner(op, argc, args);
-    std::cout << se << std::endl;
     if(op == "MIXED") {
       std::cerr << "Mixed boolean operations not presently supported" << std::endl;
       exit(2);
     }
-
+    std::string se = seCombiner(op, argc, args);
     // (2) connect to an existing socket
     int success = connect(socket_fd,
                           // sockaddr_un is a Unix sockaddr
