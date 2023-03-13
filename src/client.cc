@@ -2,21 +2,24 @@
 #include <proj2/inc/client.h>
 
 std::string DomainSocketClient::operationFinder(int argc, std::vector<std::string> argv) {
-  int b = 0;
+  int p = 0;
+  int m = 0;
   int val = (argc - 2)/2 - 1;
   std::string a;
   if (argc < 5) {
     return "n/a";
   }
   for (int i = 4; i < argc; i += 2) {
-    if (argv[i] == "+" || argv[i] == "x") {
-      b += 1;
+    if (argv[i] == "+") {
+      p += 1;
+    } else if (argv[i] == "x") {
+      m += 1;
     }
   }
   a = argv[4];
-  if ((a == "+") && (b == val)) {
+  if ((a == "+") && (p == val)) {
     return "+";
-  } else if ((a == "x") && (b == val)) {
+  } else if ((a == "x") && (m == val)) {
     return "x";
   } else {
     return "MIXED";

@@ -24,7 +24,6 @@ class DomainSocketClient : public UnixDomainSocket {
     for (int i = 0; i < argc; i++) {
       args.push_back(argv[i]);
     }
-    std::cout << args[argc-1] << std::endl;
     int socket_fd = socket(AF_UNIX, SOCK_STREAM, 0);
     std::string op;
     if (socket_fd < 0) {
