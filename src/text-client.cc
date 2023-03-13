@@ -4,4 +4,5 @@
 int main(int argc, char **argv) {
   DomainSocketClient dsc(argv[1]);
   dsc.RunClient(argc, argv);
+  return 0;
 }
